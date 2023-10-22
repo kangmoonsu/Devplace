@@ -3,12 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <title>main</title>
+    <title><Dev: place/></title>
 </head>
+<style>
+    .mainImg {
+        width: 100%;
+        height: 306px; /* 이미지 높이를 306px로 설정 */
+        border-radius: 4%;
+    }
+
+    .post {
+        padding: 10px;
+        margin-bottom: 10px;
+        height: 95px; /* 글 영역의 높이를 자동으로 조정하도록 설정 */
+    }
+
+    .post h2 {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .post p {
+        font-size: 14px;
+        margin: 0;
+    }
+</style>
+
+
 <body>
-<h1 th:text="${userDTO.email}">User Email</h1>
-<h1 th:text="${userDTO.nickname}">User nickname</h1>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<div class="container">
+    <div id="header" th:replace="header.html"></div>
+
+    <div class="row mt-5">
+        <div class="col-3">
+            <img src="/img/q&a.jpg" alt="q&a" class="mainImg">
+        </div>
+        <div class="col ms-3">
+            <div class="row post">
+                <hr>
+                <div class="col-12">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row post">
+                <div class="col-12">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+            <div class="row post">
+                <div class="col-12">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span id="mainTitle">1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <img src="/img/devplace1.jpg" alt="devplace1" class="mainImg">
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-5 mb-5">
+        <div class="col-3">
+            <img src="/img/community.jpg" alt="q&a" class="mainImg">
+        </div>
+        <div class="col ms-3">
+            <div class="row post">
+                <div class="col-12">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+            <div class="row post">
+                <div class="col-12">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+            <div class="row post">
+                <div class="col-12">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span id="mainTitle">1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <img src="/img/devplace1.jpg" alt="devplace1" class="mainImg">
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-5 mb-5">
+        <div class="col-3">
+            <img src="/img/study.jpg" alt="q&a" class="mainImg">
+        </div>
+        <div class="col ms-3">
+            <div class="row post">
+                <div class="col">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+            <div class="row post">
+                <div class="col">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+            <div class="row post">
+                <div class="col">
+                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
+                    <span id="mainTitle">1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <img src="/img/devplace1.jpg" alt="devplace1" class="mainImg">
+        </div>
+    </div>
+</div>
 </body>
 </html>

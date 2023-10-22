@@ -42,4 +42,10 @@ public class UserController {
         userService.join(userDTO);
         return "redirect:/user/login";
     }
+
+    @GetMapping("/user/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "main";
+    }
 }

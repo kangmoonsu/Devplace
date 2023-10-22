@@ -2,7 +2,9 @@ package com.michael.devplace.entity;
 
 import com.michael.devplace.dto.UserDTO;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,11 +29,11 @@ public class UserEntity {
 
     private String position;
 
-    @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+    @UpdateTimestamp
     @Column(name = "mod_date")
     private LocalDateTime mod_date;
 
-    @org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+    @CreationTimestamp
     @Column(name = "reg_date", updatable = false)
     private LocalDateTime reg_date;
 

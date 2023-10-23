@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href='https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
     <title>회원가입</title>
 </head>
 <style>
     body {
         font-family: 'NanumSquare', sans-serif;
     }
+    .form-control, .form-select, .btn, #logo {
+        width: 416px;
+        height: auto;
+    }
+
 </style>
-<script>
+<script th:inline="javascript">
     function validateForm() {
 
         const emailInput = document.getElementById('email');
@@ -82,19 +93,98 @@
 
         return true;
     }
+
+    const emailCheck = () => {
+        const email = document.getElementById("email").value;
+
+        const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+
+        console.log("입력값: ", email)
+        $.ajax({
+            type: "post",
+            url: "email-check",
+            data: {
+                "email": email
+            },
+            success: function (result) {
+                const checkResult = document.getElementById("emailResult");
+                checkResult.innerHTML = ""; // Clear any previous content
+                const icon = document.createElement("i");
+                if (!emailPattern.test(email)) {
+                    checkResult.innerText = "올바른 이메일 주소를 입력하세요.";
+                    checkResult.style.color = "red";
+                    return;
+                }
+                if (result === "ok") {
+                    console.log("사용가능한 이메일");
+                    icon.classList.add("bi", "bi-check-circle");
+                    icon.style.color = "green";
+                    checkResult.style.color = "green";
+                    checkResult.innerText = "사용 가능한 이메일입니다.";
+                } else {
+                    console.log("이미 사용중인 이메일");
+                    icon.classList.add("bi", "bi-exclamation-circle");
+                    icon.style.color = "red";
+                    checkResult.style.color = "red";
+                    checkResult.innerText = "이미 사용중인 이메일입니다.";
+                }
+                checkResult.appendChild(icon);
+            },
+            error: function (err) {
+                console.log("에러발생", err);
+            }
+        });
+    }
+    const nicknameCheck = () => {
+        const nickname = document.getElementById("nickname").value;
+
+        console.log("입력값: ", nickname)
+        $.ajax({
+            type: "post",
+            url: "nickname-check",
+            data: {
+                "nickname": nickname
+            },
+            success: function (result) {
+                const checkResult = document.getElementById("nicknameResult");
+                checkResult.innerHTML = ""; // Clear any previous content
+                const icon = document.createElement("i");
+
+                if (result === "ok") {
+                    console.log("사용가능한 닉네임");
+                    icon.classList.add("bi", "bi-check-circle");
+                    icon.style.color = "green";
+                    checkResult.style.color = "green";
+                    checkResult.innerText = "사용 가능한 닉네임입니다.";
+                } else {
+                    console.log("이미 사용중인 닉네임");
+                    icon.classList.add("bi", "bi-exclamation-circle");
+                    icon.style.color = "red";
+                    checkResult.style.color = "red";
+                    checkResult.innerText = "이미 사용중인 닉네임입니다.";
+                }
+                checkResult.appendChild(icon);
+            },
+            error: function (err) {
+                console.log("에러발생", err);
+            }
+        });
+    }
+
 </script>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-4"></div>
-        <div class="col-4">
+        <div class="col-8">
             <div class="row mt-5 mb-5">
-                <img src="/img/logo.png" alt="logo">
+                <img src="/img/logo.png" alt="logo" id="logo">
             </div>
             <form action="/user/join" method="post" onsubmit="return validateForm();">
-                <div class="mb-3">
+                <div class="mt-5 mb-3">
                     <label for="email" class="form-label">이메일</label>
-                    <input type="email" class="form-control" id="email" name="email"><span id="checkResult"></span>
+                    <input type="email" class="form-control" id="email" name="email" onblur="emailCheck()"><span id="emailResult" class="icon-message"></span>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">비밀번호</label>
@@ -102,11 +192,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="password2" class="form-label">비밀번호 확인</label>
-                    <input type="password" class="form-control" id="password2" name="password2">
+                    <input type="password" class="form-control" id="password2" name="password2"><i class="checkPassword"></i>
                 </div>
                 <div class="mb-3">
                     <label for="nickname" class="form-label">닉네임</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname">
+                    <input type="text" class="form-control" id="nickname" name="nickname" onblur="nicknameCheck()"><span id="nicknameResult"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">역할</label><br>
@@ -133,7 +223,7 @@
                         <option value="네트워크 엔지니어">네트워크 엔지니어</option>
                         <option value="보안 엔지니어">보안 엔지니어</option>
                         <option value="AI/머신러닝 엔지니어">AI/머신러닝 엔지니어</option>
-                        <option value="무직">무직</option>
+                        <option value="취업준비생 / 학생">취업준비생 / 학생</option>
                     </select>
                 </div>
                 <div class="row mt-4">
@@ -143,9 +233,10 @@
                 </div>
             </form>
         </div>
-        <div class="col-4"></div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 </body>
 </html>

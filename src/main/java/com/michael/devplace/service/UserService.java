@@ -38,4 +38,22 @@ public class UserService {
             return null;
         }
     }
+
+    public String emailCheck(String email) {
+        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()){
+            return null;
+        } else {
+            return "ok";
+        }
+    }
+
+    public String nicknameCheck(String nickname) {
+        Optional<UserEntity> byNickname = userRepository.findByNickname(nickname);
+        if (byNickname.isPresent()){
+            return null;
+        } else {
+            return "ok";
+        }
+    }
 }

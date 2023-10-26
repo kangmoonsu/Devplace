@@ -18,12 +18,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/user/login")
+    @GetMapping("/user/login") // 로그인 페이지
     public String login() {
         return "login";
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/user/login") // 로그인 실행
     public String doLogin(UserDTO userDTO, HttpSession session) {
         UserDTO user = userService.login(userDTO);
         if (user != null) {
@@ -34,25 +34,25 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/join")
+    @GetMapping("/user/join") // 회원가입 페이지
     public String join() {
         return "join";
     }
 
-    @PostMapping("/user/join")
+    @PostMapping("/user/join") // 회원가입 실행
     public String doJoin(UserDTO userDTO) {
         System.out.println(userDTO);
         userService.join(userDTO);
         return "redirect:/user/login";
     }
 
-    @GetMapping("/user/logout")
+    @GetMapping("/user/logout") // 로그아웃
     public String logout(HttpSession session) {
         session.invalidate();
         return "main";
     }
 
-    @PostMapping("/user/email-check")
+    @PostMapping("/user/email-check") // 이메일 중복 체크
     public @ResponseBody String emailCheck(@RequestParam("email") String email) {
         String checkResult = userService.emailCheck(email);
         if (checkResult != null){
@@ -62,7 +62,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/nickname-check")
+    @PostMapping("/user/nickname-check") // 닉네임 중복 체크
     public @ResponseBody String nicknameCheck(@RequestParam("nickname") String nickname){
         String checkResult = userService.nicknameCheck(nickname);
         if (checkResult != null){

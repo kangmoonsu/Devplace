@@ -112,7 +112,7 @@
                 checkResult.innerHTML = ""; // Clear any previous content
                 const icon = document.createElement("i");
                 if (!emailPattern.test(email)) {
-                    checkResult.innerText = "올바른 이메일 주소를 입력하세요.";
+                    checkResult.innerText = "올바른 이메일 주소를 입력하세요 ";
                     checkResult.style.color = "red";
                     return;
                 }
@@ -121,13 +121,13 @@
                     icon.classList.add("bi", "bi-check-circle");
                     icon.style.color = "green";
                     checkResult.style.color = "green";
-                    checkResult.innerText = "사용 가능한 이메일입니다.";
+                    checkResult.innerText = "사용 가능한 이메일입니다 ";
                 } else {
                     console.log("이미 사용중인 이메일");
                     icon.classList.add("bi", "bi-exclamation-circle");
                     icon.style.color = "red";
                     checkResult.style.color = "red";
-                    checkResult.innerText = "이미 사용중인 이메일입니다.";
+                    checkResult.innerText = "이미 사용중인 이메일입니다 ";
                 }
                 checkResult.appendChild(icon);
             },
@@ -156,13 +156,13 @@
                     icon.classList.add("bi", "bi-check-circle");
                     icon.style.color = "green";
                     checkResult.style.color = "green";
-                    checkResult.innerText = "사용 가능한 닉네임입니다.";
+                    checkResult.innerText = "사용 가능한 닉네임입니다 ";
                 } else {
                     console.log("이미 사용중인 닉네임");
                     icon.classList.add("bi", "bi-exclamation-circle");
                     icon.style.color = "red";
                     checkResult.style.color = "red";
-                    checkResult.innerText = "이미 사용중인 닉네임입니다.";
+                    checkResult.innerText = "이미 사용중인 닉네임입니다 ";
                 }
                 checkResult.appendChild(icon);
             },

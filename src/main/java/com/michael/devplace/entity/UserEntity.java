@@ -1,21 +1,24 @@
 package com.michael.devplace.entity;
 
 import com.michael.devplace.dto.UserDTO;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user")
-public class UserEntity {
+public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(unique = true)
     private String email;
@@ -25,44 +28,29 @@ public class UserEntity {
     @Column(unique = true)
     private String nickname;
 
+    @Column
     private String role;
 
+    @Column
     private String position;
 
-    @UpdateTimestamp
-    @Column(name = "mod_date")
-    private LocalDateTime mod_date;
-
-    @CreationTimestamp
-    @Column(name = "reg_date", updatable = false)
-    private LocalDateTime reg_date;
-
     public static UserEntity toUserEntity(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity();
-
-        userEntity.setEmail(userDTO.getEmail());
-        userEntity.setPassword(userDTO.getPassword());
-        userEntity.setNickname(userDTO.getNickname());
-        userEntity.setRole(userDTO.getRole());
-        userEntity.setPosition(userDTO.getPosition());
-        userEntity.setMod_date(userDTO.getMod_date());
-        userEntity.setReg_date(userDTO.getReg_date());
-
-        return userEntity;
+        return UserEntity.builder()
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .nickname(userDTO.getNickname())
+                .role(userDTO.getRole())
+                .position(userDTO.getPosition())
+                .build();
     }
 
     public static UserEntity toModifyUserEntity(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity();
-
-        userEntity.setId(userDTO.getId());
-        userEntity.setEmail(userDTO.getEmail());
-        userEntity.setPassword(userDTO.getPassword());
-        userEntity.setNickname(userDTO.getNickname());
-        userEntity.setRole(userDTO.getRole());
-        userEntity.setPosition(userDTO.getPosition());
-        userEntity.setMod_date(userDTO.getMod_date());
-        userEntity.setReg_date(userDTO.getReg_date());
-
-        return userEntity;
+        return UserEntity.builder()
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .nickname(userDTO.getNickname())
+                .role(userDTO.getRole())
+                .position(userDTO.getPosition())
+                .build();
     }
 }

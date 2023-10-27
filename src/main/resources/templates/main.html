@@ -6,26 +6,25 @@
     <title><Dev: place/></title>
 </head>
 <style>
+    #devplace{
+        width: 1296px;
+        height: auto;
+
+    }
     .mainImg {
         width: 100%;
-        height: 306px; /* 이미지 높이를 306px로 설정 */
+        height: 306px;
         border-radius: 4%;
     }
 
-    .post {
-        padding: 10px;
-        margin-bottom: 10px;
-        height: 95px; /* 글 영역의 높이를 자동으로 조정하도록 설정 */
-    }
-
-    .post h2 {
-        font-size: 18px;
-        margin: 0;
-    }
-
-    .post p {
+    .postMain {
         font-size: 14px;
-        margin: 0;
+        font-weight: 400;
+    }
+
+    .postTitle {
+        font-size: 18px;
+        font-weight: 550;
     }
 </style>
 
@@ -34,94 +33,95 @@
 <div class="container">
     <div id="header" th:replace="header.html"></div>
 
-    <div class="row mt-5">
+    <div class="row">
+        <div class="col">
+            <img src="/img/community1.jpg" alt="" id="devplace">
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-5">
         <div class="col-3">
             <img src="/img/q&a.jpg" alt="q&a" class="mainImg">
         </div>
-        <div class="col ms-3">
-            <div class="row post">
-                <hr>
+        <div class="col-3 ms-2">
+            <div class="row">
                 <div class="col-12">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
                 </div>
             </div>
             <hr>
-            <div class="row post">
+            <div class="row">
                 <div class="col-12">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
                 </div>
             </div>
-            <div class="row post">
+            <hr>
+            <div class="row">
                 <div class="col-12">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span id="mainTitle">1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
                 </div>
             </div>
         </div>
         <div class="col-3">
-            <img src="/img/devplace1.jpg" alt="devplace1" class="mainImg">
+            <img src="/img/community.jpg" alt="devplace1" class="mainImg">
+        </div>
+        <div class="col ms-2">
+            <div class="row">
+                <div class="col-12">
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+                    <br>
+                    <span class="postTitle">1번글</span>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
-    <div class="row mt-5 mb-5">
-        <div class="col-3">
-            <img src="/img/community.jpg" alt="q&a" class="mainImg">
-        </div>
-        <div class="col ms-3">
-            <div class="row post">
-                <div class="col-12">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
-                </div>
-            </div>
-            <div class="row post">
-                <div class="col-12">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
-                </div>
-            </div>
-            <div class="row post">
-                <div class="col-12">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span id="mainTitle">1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <img src="/img/devplace1.jpg" alt="devplace1" class="mainImg">
+    <div class="row">
+        <div class="col">
+            Study
         </div>
     </div>
-    <hr>
-    <div class="row mt-5 mb-5">
-        <div class="col-3">
-            <img src="/img/study.jpg" alt="q&a" class="mainImg">
-        </div>
-        <div class="col ms-3">
-            <div class="row post">
-                <div class="col">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
-                </div>
-            </div>
-            <div class="row post">
-                <div class="col">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span>1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
-                </div>
-            </div>
-            <div class="row post">
-                <div class="col">
-                    <span>작성자: 작성자 이름 - 2시간 전</span><br>
-                    <span id="mainTitle">1번글</span><span>좋아요 수: 100, 댓글 수: 20</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <img src="/img/devplace1.jpg" alt="devplace1" class="mainImg">
-        </div>
-    </div>
+
+
+    <div id="footer" th:replace="footer.html"></div>
 </div>
 </body>
 </html>

@@ -34,6 +34,9 @@ public class UserEntity extends BaseEntity {
     @Column
     private String position;
 
+    @Column
+    private String imagePath;
+
     public static UserEntity toUserEntity(UserDTO userDTO) {
         return UserEntity.builder()
                 .email(userDTO.getEmail())

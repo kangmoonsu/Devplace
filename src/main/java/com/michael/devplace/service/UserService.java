@@ -3,20 +3,30 @@ package com.michael.devplace.service;
 import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.entity.UserEntity;
 import com.michael.devplace.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public void join(UserDTO userDTO) {
+    public void join(UserDTO userDTO) throws IOException {
+        MultipartFile file = userDTO.getImage();
+        String originalFileName = file.getOriginalFilename();
+        String saveFileName = System.currentTimeMillis() + "_" + originalFileName;
+        String savePath = "C:/springboot_img/" + saveFileName;
+        file.transferTo(new File(savePath));
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
+        userEntity.setImagePath(savePath);
         userRepository.save(userEntity);
     }
 

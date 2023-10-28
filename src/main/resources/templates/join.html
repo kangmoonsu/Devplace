@@ -181,7 +181,7 @@
             <div class="row mt-5 mb-5">
                 <img src="/img/logo.png" alt="logo" id="logo">
             </div>
-            <form action="/user/join" method="post" onsubmit="return validateForm();">
+            <form action="/user/join" method="post" onsubmit="return validateForm();" enctype="multipart/form-data">
                 <div class="mt-5 mb-3">
                     <label for="email" class="form-label">이메일</label>
                     <input type="email" class="form-control" id="email" name="email" onblur="emailCheck()"><span id="emailResult" class="icon-message"></span>
@@ -225,6 +225,10 @@
                         <option value="AI/머신러닝 엔지니어">AI/머신러닝 엔지니어</option>
                         <option value="취업준비생 / 학생">취업준비생 / 학생</option>
                     </select>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">프로필 이미지(정사각형 크기로 업로드 해주세요)</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
                 </div>
                 <div class="row mt-4">
                     <div class="col d-grid">

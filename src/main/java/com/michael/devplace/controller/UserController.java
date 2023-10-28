@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Controller
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/user/join") // 회원가입 실행
-    public String doJoin(UserDTO userDTO) {
+    public String doJoin(UserDTO userDTO) throws IOException {
         System.out.println(userDTO);
         userService.join(userDTO);
         return "redirect:/user/login";

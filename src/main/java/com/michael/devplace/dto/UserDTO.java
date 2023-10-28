@@ -3,6 +3,7 @@ package com.michael.devplace.dto;
 import com.michael.devplace.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.GenerationTime;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
@@ -24,6 +25,8 @@ public class UserDTO {
     private String role;
 
     private String position;
+
+    private MultipartFile image;
 
     private LocalDateTime updatedTime;
 

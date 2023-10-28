@@ -16,4 +16,11 @@ spring:
     open-in-view: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+
+  servlet:
+    multipart:
+      # 전체 요청의 최대 크기 (파일 크기 포함)
+      max-request-size: 10MB
+      # 각 파일의 최대 크기
+      max-file-size: 2MB

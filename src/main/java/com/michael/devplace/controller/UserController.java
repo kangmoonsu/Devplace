@@ -29,7 +29,7 @@ public class UserController {
         UserDTO user = userService.login(userDTO);
         if (user != null) {
             session.setAttribute("user", user);
-            return "redirect:/devplace/main";
+            return "redirect:/main";
         } else {
             return "login";
         }

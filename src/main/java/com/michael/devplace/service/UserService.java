@@ -26,7 +26,7 @@ public class UserService {
         String savePath = "C:/springboot_img/" + saveFileName;
         file.transferTo(new File(savePath));
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
-        userEntity.setImagePath(savePath);
+        userEntity.setImagePath(saveFileName);
         userRepository.save(userEntity);
     }
 

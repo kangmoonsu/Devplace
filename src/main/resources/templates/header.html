@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +21,9 @@
             </div>
             <div class="col-3 navi">
                 <nav class="nav">
-                    <a class="nav-link" href="#">Q&A</a>
-                    <a class="nav-link" href="#">커뮤니티</a>
-                    <a class="nav-link" href="#">스터디</a>
+                    <a th:href="@{/main/qa}" class="nav-link">Q&A</a>
+                    <a th:href="@{/main/community}" class="nav-link">커뮤니티</a>
+                    <a th:href="@{/main/study}" class="nav-link">Study</a>
                 </nav>
             </div>
             <div class="col navi">
@@ -51,6 +51,7 @@
                 <a class="btn btn-outline-primary" href="/user/login">로그인</a>
                 <a class="ms-2 btn btn-primary" style="color: white;" href="/user/join">회원가입</a>
             </div>
+
         </div>
         <hr>
     </header>

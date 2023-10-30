@@ -28,6 +28,8 @@ public class UserDTO {
 
     private MultipartFile image;
 
+    private String imagePath;
+
     private LocalDateTime updatedTime;
 
     private LocalDateTime createdTime;
@@ -40,6 +42,7 @@ public class UserDTO {
                 .nickname(userEntity.getNickname())
                 .role(userEntity.getRole())
                 .position(userEntity.getPosition())
+                .imagePath(userEntity.getImagePath())
                 .updatedTime(userEntity.getUpdatedTime())
                 .createdTime(userEntity.getCreatedTime())
                 .build();

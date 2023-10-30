@@ -10,10 +10,17 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class MainController {
 
-    @GetMapping("/devplace/main")
+    @GetMapping("/main")
     public String mainPage(HttpSession session, Model model){
         UserDTO userDTO = (UserDTO) session.getAttribute("user");
-        model.addAttribute("userDTO", userDTO);
+        if (userDTO != null){
+            model.addAttribute("userDTO", userDTO);
+        }
         return "main";
+    }
+
+    @GetMapping("/main/community")
+    public String community(){
+        return "community";
     }
 }

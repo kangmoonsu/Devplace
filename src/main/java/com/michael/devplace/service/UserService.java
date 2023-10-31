@@ -20,13 +20,18 @@ public class UserService {
     private final UserRepository userRepository;
 
     public void join(UserDTO userDTO) throws IOException {
-        MultipartFile file = userDTO.getImage();
-        String originalFileName = file.getOriginalFilename();
-        String saveFileName = System.currentTimeMillis() + "_" + originalFileName;
-        String savePath = "C:/springboot_img/" + saveFileName;
-        file.transferTo(new File(savePath));
+        if (userDTO.getImage() != null && !userDTO.getImage().isEmpty()) {
+            MultipartFile file = userDTO.getImage();
+            String originalFileName = file.getOriginalFilename();
+            String saveFileName = System.currentTimeMillis() + "_" + originalFileName;
+            String savePath = "C:/springboot_img/" + saveFileName;
+            file.transferTo(new File(savePath));
+            userDTO.setImagePath(saveFileName);
+        } else {
+            userDTO.setImagePath(null); // 이미지를 선택하지 않았을 때, 이미지 경로를 null로 설정
+        }
+
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
-        userEntity.setImagePath(saveFileName);
         userRepository.save(userEntity);
     }
 

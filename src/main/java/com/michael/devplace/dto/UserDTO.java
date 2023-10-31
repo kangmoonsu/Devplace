@@ -22,8 +22,6 @@ public class UserDTO {
 
     private String nickname;
 
-    private String role;
-
     private String position;
 
     private MultipartFile image;
@@ -40,7 +38,6 @@ public class UserDTO {
                 .email(userEntity.getEmail())
                 .password(userEntity.getPassword())
                 .nickname(userEntity.getNickname())
-                .role(userEntity.getRole())
                 .position(userEntity.getPosition())
                 .imagePath(userEntity.getImagePath())
                 .updatedTime(userEntity.getUpdatedTime())

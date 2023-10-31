@@ -50,7 +50,7 @@ public class UserController {
     @GetMapping("/user/logout") // 로그아웃
     public String logout(HttpSession session) {
         session.invalidate();
-        return "main";
+        return "redirect:/main";
     }
 
     @PostMapping("/user/email-check") // 이메일 중복 체크

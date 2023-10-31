@@ -1,9 +1,6 @@
 package com.michael.devplace.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,12 +9,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postId")
     private PostEntity postEntity;
 
@@ -26,4 +24,12 @@ public class ImageEntity {
 
     @Column
     private String filePath;
+
+    public static ImageEntity toImageEntity(PostEntity post, String originalImgName, String storedImgName) {
+        return ImageEntity.builder()
+                .fileName(originalImgName)
+                .filePath(storedImgName)
+                .postEntity(post)
+                .build();
+    }
 }

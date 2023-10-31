@@ -1,10 +1,12 @@
 package com.michael.devplace.dto;
 
+import com.michael.devplace.entity.ImageEntity;
 import com.michael.devplace.entity.PostEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,18 +32,18 @@ public class PostDTO {
 
     private List<MultipartFile> images;
 
-    private String originalFileName; // 원본 파일 이름
+    private List<String> originalFileName; // 원본 파일 이름
 
-    private String storedFileName;
+    private List<String> storedFileName;
 
-    private boolean fileExist;
+    private int fileExist; // true : 1 , false : 0
 
     private LocalDateTime updatedTime;
 
     private LocalDateTime createdTime;
 
-    public static PostDTO toPostDTO(PostEntity postEntity){
-        return PostDTO.builder()
+    public static PostDTO toPostDTO(PostEntity postEntity) {
+        PostDTO.PostDTOBuilder postDTOBuilder = PostDTO.builder()
                 .id(postEntity.getId())
                 .userId(postEntity.getUserEntity().getId())
                 .title(postEntity.getTitle())
@@ -49,10 +51,30 @@ public class PostDTO {
                 .postType(postEntity.getPostType())
                 .topic(postEntity.getTopic())
                 .viewCnt(postEntity.getViewCnt())
-
                 .updatedTime(postEntity.getUpdatedTime())
-                .createdTime(postEntity.getCreatedTime())
-                .build();
+                .createdTime(postEntity.getCreatedTime());
 
+        if (postEntity.getFileExist() == 1) {
+            postDTOBuilder
+                    .originalFileName(buildOriginalFileNames(postEntity))
+                    .storedFileName(buildStoredFileNames(postEntity));
+        }
+        return postDTOBuilder.build();
+    }
+
+    private static List<String> buildStoredFileNames(PostEntity postEntity) {
+        List<String> storedFileNames = new ArrayList<>();
+        for (ImageEntity image : postEntity.getImageEntityList()){
+            storedFileNames.add(image.getFilePath());
+        }
+        return storedFileNames;
+    }
+
+    private static List<String> buildOriginalFileNames(PostEntity postEntity) {
+        List<String> originalFileNames = new ArrayList<>();
+        for (ImageEntity image : postEntity.getImageEntityList()) {
+            originalFileNames.add(image.getFileName());
+        }
+        return originalFileNames;
     }
 }

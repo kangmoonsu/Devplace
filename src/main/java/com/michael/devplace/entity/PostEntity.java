@@ -39,7 +39,7 @@ public class PostEntity extends DateEntity{
     private int viewCnt;
 
     @Column
-    private boolean fileExist;
+    private int fileExist; // true : 1 , false : 0
 
     @OneToMany(mappedBy = "postEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
@@ -53,9 +53,34 @@ public class PostEntity extends DateEntity{
                 .userEntity(userEntity)
                 .title(postDTO.getTitle())
                 .content(postDTO.getContent())
+                .postType(postDTO.getPostType())
                 .topic(postDTO.getTopic())
+                .viewCnt(0)
+                .fileExist(0) // 파일 없음
+                .build();
+    }
+
+    public static PostEntity toSaveImageEntity(PostDTO postDTO, UserEntity userEntity){
+        return PostEntity.builder()
+                .id(postDTO.getId())
+                .userEntity(userEntity)
+                .title(postDTO.getTitle())
+                .content(postDTO.getContent())
+                .postType(postDTO.getPostType())
+                .topic(postDTO.getTopic())
+                .viewCnt(0)
+                .fileExist(1) // 파일 존재
+                .build();
+    }
+
+    public static PostEntity toUpdateEntity(PostDTO postDTO, UserEntity userEntity){
+        return PostEntity.builder()
+                .id(postDTO.getId())
+                .userEntity(userEntity)
+                .title(postDTO.getTitle())
+                .content(postDTO.getContent())
+                .postType(postDTO.getPostType())
                 .viewCnt(postDTO.getViewCnt())
-                .fileExist(postDTO.isFileExist())
                 .build();
     }
 }

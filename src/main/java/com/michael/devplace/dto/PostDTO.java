@@ -36,8 +36,6 @@ public class PostDTO {
 
     private List<String> storedFileName;
 
-    private int fileExist; // true : 1 , false : 0
-
     private LocalDateTime updatedTime;
 
     private LocalDateTime createdTime;
@@ -54,7 +52,8 @@ public class PostDTO {
                 .updatedTime(postEntity.getUpdatedTime())
                 .createdTime(postEntity.getCreatedTime());
 
-        if (postEntity.getFileExist() == 1) {
+        // 이미지 테이블에 외래 키로 연결된 경우 이미지가 있음을 가정
+        if (postEntity.getImageEntityList() != null && !postEntity.getImageEntityList().isEmpty()) {
             postDTOBuilder
                     .originalFileName(buildOriginalFileNames(postEntity))
                     .storedFileName(buildStoredFileNames(postEntity));
@@ -64,7 +63,7 @@ public class PostDTO {
 
     private static List<String> buildStoredFileNames(PostEntity postEntity) {
         List<String> storedFileNames = new ArrayList<>();
-        for (ImageEntity image : postEntity.getImageEntityList()){
+        for (ImageEntity image : postEntity.getImageEntityList()) {
             storedFileNames.add(image.getFilePath());
         }
         return storedFileNames;

@@ -1,5 +1,6 @@
 package com.michael.devplace.entity;
 
+import com.michael.devplace.dto.CommentDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,10 +27,22 @@ public class CommentEntity {
     @JoinColumn(name = "userId") //
     private UserEntity userEntity;
 
+    @Column(length = 1000)
+    private String comment;
+
     @Column
-    private Integer parent_id;
+    private Integer parentId;
 
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdTime;
+
+    public static CommentEntity toSaveEntity(CommentDTO commentDTO, PostEntity postEntity, UserEntity userEntity){
+        return CommentEntity.builder()
+                .postEntity(postEntity)
+                .userEntity(userEntity)
+                .comment(commentDTO.getComment())
+                .createdTime(commentDTO.getCreatedTime())
+                .build();
+    }
 }

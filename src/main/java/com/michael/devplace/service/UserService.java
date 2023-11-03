@@ -2,6 +2,7 @@ package com.michael.devplace.service;
 
 import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.entity.UserEntity;
+import com.michael.devplace.repository.PostRepository;
 import com.michael.devplace.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public void join(UserDTO userDTO) throws IOException {
         if (userDTO.getImage() != null && !userDTO.getImage().isEmpty()) {
@@ -71,4 +75,5 @@ public class UserService {
             return "ok";
         }
     }
+
 }

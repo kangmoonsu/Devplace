@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +27,10 @@
     .userImg{
         width: 30px;
         height: auto;
+    }
+    #detail {
+        text-decoration: none; /* 링크 텍스트에 밑줄 제거 */
+        color: inherit; /* 링크 색상을 부모 요소에서 상속받음 */
     }
 </style>
 
@@ -71,109 +75,44 @@
     <pre>
 
 
-        </pre>
+    </pre>
 
-    <div class="row">
+    <!-- 커뮤니티 전체 리스트 -->
+    <div class="row" th:each="post : ${communityList}">
         <div class="col-1"></div>
         <div class="col-10">
-            <div class="row">
-                <div class="col">
-                    <img src="img/defaultImg.png" alt="" class="userImg me-1"><span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span>
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <span class="postMain" th:text="${post.userDTO.nickname}"></span>
+                        <i class="bi bi-dot"></i>
+                        <span class="postMain" th:text="${post.postDTO.createdTime}"></span>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-8 mt-4">
+                        <a id="detail" th:href="@{|/post/${post.postDTO.id}|}">
+                            <span class="posttitle text-break" th:text="${post.postDTO.title}"></span>
+                        </a>
+                    </div>
+                    <div class="col-4 mt-auto text-end">
+                        <span class="postMain">
+                            <i class="bi bi-eye me-1"></i>
+                            <span th:text="${post.postDTO.viewCnt}"></span>
+                            <i class="bi bi-chevron-expand ms-2 me-1"></i>
+                            <span>5</span>
+                            <i class="ms-2 me-1 bi bi-chat-left-dots"></i>
+                            <span>17</span>
+                        </span>
+                    </div>
+                </div>
+                <hr>
             </div>
-            <div class="row">
-                <div class="col-8 mt-4">
-                    <span class="posttitle text-break">1번글</span>
-                </div>
-                <div class="col-4 mt-auto text-end">
-                    <span class="postMain"><i class="bi bi-eye me-1"></i>140<i class="bi bi-chevron-expand ms-2 me-1"></i>5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                </div>
-            </div>
-            <hr>
         </div>
         <div class="col-1"></div>
     </div>
 
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="row">
-                <div class="col">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-8 mt-4">
-                    <span class="posttitle text-break">1번글</span>
-                </div>
-                <div class="col-4 mt-auto text-end">
-                    <span class="postMain"><i class="bi bi-eye me-1"></i>140<i class="bi bi-chevron-expand ms-2 me-1"></i>5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                </div>
-            </div>
-            <hr>
-        </div>
-        <div class="col-1"></div>
-    </div>
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="row">
-                <div class="col">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-8 mt-4">
-                    <span class="posttitle text-break">1번글</span>
-                </div>
-                <div class="col-4 mt-auto text-end">
-                    <span class="postMain"><i class="bi bi-eye me-1"></i>140<i class="bi bi-chevron-expand ms-2 me-1"></i>5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                </div>
-            </div>
-            <hr>
-        </div>
-        <div class="col-1"></div>
-    </div>
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="row">
-                <div class="col">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-8 mt-4">
-                    <span class="posttitle text-break">1번글</span>
-                </div>
-                <div class="col-4 mt-auto text-end">
-                    <span class="postMain"><i class="bi bi-eye me-1"></i>140<i class="bi bi-chevron-expand ms-2 me-1"></i>5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                </div>
-            </div>
-            <hr>
-        </div>
-        <div class="col-1"></div>
-    </div>
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="row">
-                <div class="col">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-8 mt-4">
-                    <span class="posttitle text-break">1번글</span>
-                </div>
-                <div class="col-4 mt-auto text-end">
-                    <span class="postMain"><i class="bi bi-eye me-1"></i>140<i class="bi bi-chevron-expand ms-2 me-1"></i>5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                </div>
-            </div>
-            <hr>
-        </div>
-        <div class="col-1"></div>
-    </div>
+
 
     <!-- paging -->
     <div class="row">

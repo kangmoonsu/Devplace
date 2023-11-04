@@ -113,7 +113,7 @@ public class PostService {
 
     public List<Map<String, Object>> commentList(Integer id) {
         List<Map<String, Object>> list = new ArrayList<>();
-        List<CommentEntity> commentEntityList = commentRepository.findByPostEntityId(id);
+        List<CommentEntity> commentEntityList = commentRepository.findByPostEntityIdOrderByIdDesc(id);
         for (CommentEntity commentEntity : commentEntityList){
             Map<String, Object> map = new HashMap<>();
 

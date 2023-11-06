@@ -45,17 +45,12 @@ public class PostController {
 
     @GetMapping("/{id}")
     public String communityDetail(@PathVariable Integer id, Model model, HttpSession session){
-
         UserDTO userDTO = (UserDTO) session.getAttribute("user");
         if (userDTO != null){
             model.addAttribute("userDTO", userDTO);
         }
-
-
         postService.addViewCount(id);// 클릭 당 조회수 1 증가
-
         Map<String, Object> detail = postService.findById(id);
-
         model.addAttribute("detail", detail);
 
         return "communityDetail";

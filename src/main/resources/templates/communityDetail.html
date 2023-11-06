@@ -63,7 +63,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col">
-                            <span th:text="${detail.postDTO.getCreatedTime()}"><i class="bi bi-dot"></i><i class="bi bi-eye me-1"></i></span><span th:text="${detail.postDTO.viewCnt}"></span>
+                            <span th:text="${detail.postDTO.createdTime}" th:attr="data-created-time=${detail.postDTO.createdTime}"></span><i class="bi bi-dot"></i><i class="bi bi-eye me-1"></i><span th:text="${detail.postDTO.viewCnt}"></span>
                         </div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <span id="listMonth">${createdTime}</span>
+                                    <span id="listMonth" class="comment-time" data-created-time="${createdTime}"></span>
                                 </div>
                             </div>
                         </div>
@@ -258,15 +258,38 @@
                     // Append the new comment element to the comment list container
                     commentListContainer.append(newCommentElement);
                 });
+                formatTimeAgo();
             },
             error: function (err) {
                 console.log("댓글을 가져오는데 실패했습니다.", err);
             }
         });
     }
+
+    function formatTimeAgo() {
+        const timeAgoElements = document.querySelectorAll('[data-created-time]');
+
+        timeAgoElements.forEach(element => {
+            const createdTime = element.getAttribute('data-created-time');
+            const now = new Date();
+            const createdDate = new Date(createdTime);
+            const timeDifference = now - createdDate;
+
+            if (timeDifference < 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / 1000) + "초 전";
+            } else if (timeDifference < 60 * 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / (60 * 1000)) + "분 전";
+            } else if (timeDifference < 24 * 60 * 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / (60 * 60 * 1000)) + "시간 전";
+            } else {
+                element.textContent = Math.floor(timeDifference / (24 * 60 * 60 * 1000)) + "일 전";
+            }
+        });
+    }
 window.addEventListener("DOMContentLoaded",function (){
     fetchCommentList();
     getSessionId();
+    formatTimeAgo();
 })
 </script>
 </html>

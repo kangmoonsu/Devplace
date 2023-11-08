@@ -41,6 +41,10 @@ public class PostEntity extends DateEntity{
     @OneToMany(mappedBy = "postEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    public int getCommentCount() {
+        return commentEntityList.size();
+    }
+
     @OneToMany(mappedBy = "postEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ImageEntity> imageEntityList = new ArrayList<>();
 

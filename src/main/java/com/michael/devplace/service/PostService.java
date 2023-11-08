@@ -13,6 +13,10 @@ import com.michael.devplace.repository.PostRepository;
 import com.michael.devplace.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,27 +68,28 @@ public class PostService {
 
 
     @Transactional
-    public List<Map<String, Object>> communityList() {
+    public Page<Map<String, Object>> communityList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
 
-        List<PostEntity> postEntityList = postRepository.findByPostTypeOrderByIdDesc("community");
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
 
-        List<Map<String, Object>> list = new ArrayList<>();
+        Page<PostEntity> postEntities = postRepository.findByPostTypeOrderByIdDesc("community", pageable);
 
-        for (PostEntity postEntity : postEntityList) {
+        return postEntities.map(postEntity -> {
             Map<String, Object> map = new HashMap<>();
 
             UserEntity userEntity = postEntity.getUserEntity();
             UserDTO userDTO = UserDTO.toUserDTO(userEntity);
             PostDTO postDTO = PostDTO.toPostDTO(postEntity);
-
+            int commentCnt = postEntity.getCommentCount();
             map.put("postDTO", postDTO);
             map.put("userDTO", userDTO);
-
-            list.add(map);
-        }
-
-        return list;
+            map.put("commentCnt", commentCnt);
+            return map;
+        });
     }
+
 
     @Transactional
     public void addViewCount(Integer id) {
@@ -103,9 +108,10 @@ public class PostService {
 
             UserEntity userEntity = postEntity.getUserEntity();
             UserDTO userDTO = UserDTO.toUserDTO(userEntity);
-
+            int commentCnt = postEntity.getCommentCount();
             map.put("postDTO", postDTO);
             map.put("userDTO", userDTO);
+            map.put("commentCnt", commentCnt);
         }
 
         return map;

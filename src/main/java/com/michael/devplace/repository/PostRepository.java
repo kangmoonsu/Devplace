@@ -1,6 +1,8 @@
 package com.michael.devplace.repository;
 
 import com.michael.devplace.entity.PostEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +15,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
     // postType = community의 게시글 불러오는 List
-    List<PostEntity> findByPostTypeOrderByIdDesc(String postType);
+    Page<PostEntity> findByPostTypeOrderByIdDesc(String postType, Pageable pageable);
 
     // 조회수 1 증가
     @Modifying

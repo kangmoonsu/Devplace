@@ -21,5 +21,11 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     @Modifying
     @Query("update PostEntity p set p.viewCnt = p.viewCnt + 1 where  p.id = :id")
     void addViewCount(@Param("id") Integer id);
+
+    // 커뮤니티 전체 검색
+    @Query("SELECT p FROM PostEntity p " +
+            "WHERE p.postType = 'community' " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<PostEntity> searchCommunityPosts(@Param("search")String search, Pageable pageable);
 }
 

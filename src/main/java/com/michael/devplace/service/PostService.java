@@ -76,18 +76,7 @@ public class PostService {
 
         Page<PostEntity> postEntities = postRepository.findByPostTypeOrderByIdDesc("community", pageable);
 
-        return postEntities.map(postEntity -> {
-            Map<String, Object> map = new HashMap<>();
-
-            UserEntity userEntity = postEntity.getUserEntity();
-            UserDTO userDTO = UserDTO.toUserDTO(userEntity);
-            PostDTO postDTO = PostDTO.toPostDTO(postEntity);
-            int commentCnt = postEntity.getCommentCount();
-            map.put("postDTO", postDTO);
-            map.put("userDTO", userDTO);
-            map.put("commentCnt", commentCnt);
-            return map;
-        });
+        return getPostDTOs(postEntities);
     }
 
 
@@ -133,5 +122,30 @@ public class PostService {
             list.add(map);
         }
         return list;
+    }
+
+    public Page<Map<String, Object>> searchedCommunityList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchCommunityPosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    private Page<Map<String, Object>> getPostDTOs(Page<PostEntity> postEntities) {
+        return postEntities.map(postEntity -> {
+            Map<String, Object> map = new HashMap<>();
+
+            // 게시물과 사용자 정보를 맵에 추가
+            UserEntity userEntity = postEntity.getUserEntity();
+            UserDTO userDTO = UserDTO.toUserDTO(userEntity);
+            PostDTO postDTO = PostDTO.toPostDTO(postEntity);
+            int commentCnt = postEntity.getCommentCount();
+            map.put("postDTO", postDTO);
+            map.put("userDTO", userDTO);
+            map.put("commentCnt", commentCnt);
+            return map;
+        });
     }
 }

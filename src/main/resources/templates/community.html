@@ -55,17 +55,19 @@
         <div class="col-4 text-center">
             <a href="" class="btn btn-lg">사는 얘기</a>
             <a href="" class="btn btn-lg">공유</a>
-            <a href="" class="btn btn-lg btn-outline-primary">전체</a>
+            <a th:href="@{/main/community}" class="btn btn-lg btn-outline-primary">전체</a>
         </div>
         <div class="col-3"></div>
     </div>
 
+    <!--Search-->
     <div class="row mt-5">
         <div class="col-4"></div>
         <div class="col-4">
-            <form class="input-group">
-                <input type="search" class="form-control" placeholder="커뮤니티 내에서 검색" aria-label="Search" aria-describedby="search-button">
-                <button class="btn btn-primary" type="button" id="search-button">
+            <form class="input-group" action="/main/community" method="get">
+                <input type="text" name="search" class="form-control" placeholder="커뮤니티 내에서 검색" aria-label="Search" aria-describedby="search-button" th:value="${search}">
+                <!-- 추가: th:value="${search}"를 사용하여 서칭 값 설정 -->
+                <button class="btn btn-primary" type="submit" id="search-button">
                     <i class="bi bi-search"></i>
                 </button>
             </form>
@@ -120,31 +122,28 @@
         <div class="col-10">
             <div class="row">
                 <div class="col-4 text-start">
-                    <a th:href="@{|/main/community?page=1|}">처음으로</a>
+                    <a th:href="@{|/main/community?page=1&search=${search}|}" th:attrappend="search=${search}">처음으로</a>
                 </div>
                 <div class="col-4">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            <!-- 이전 페이지로 이동하는 "<" 버튼 -->
+                            <!-- "이전" 버튼 -->
                             <li class="page-item" th:class="${communityList.number == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${communityList.number != 0}" th:href="@{|/main/community?page=${communityList.number}|}">&lt;</a>
+                                <a class="page-link" th:if="${communityList.number != 0}" th:href="@{|/main/community?page=${communityList.number}|}" th:attrappend="search=${search}">&lt;</a>
                             </li>
-
                             <!-- 페이지 번호 버튼 -->
-                            <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == communityList.number + 1} ? 'active' : ''" class="page-item">
-                                <a class="page-link" th:href="@{|/main/community?page=${pageNum}|}" th:text="${pageNum}"></a>
+                            <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == communityList.number + 1 ? 'active' : ''}" class="page-item">
+                                <a class="page-link" th:href="@{|/main/community?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
                             </li>
-
-                            <!-- 다음 페이지로 이동하는 ">" 버튼 -->
+                            <!-- "다음" 버튼 -->
                             <li class="page-item" th:class="${communityList.number + 1 >= communityList.totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${communityList.number + 1 < communityList.totalPages}" th:href="@{|/main/community?page=${communityList.number + 2}|}">&gt;</a>
+                                <a class="page-link" th:if="${communityList.number + 1 < communityList.totalPages}" th:href="@{|/main/community?page=${communityList.number + 2}|}" th:attrappend="search=${search}">&gt;</a>
                             </li>
-
                         </ul>
                     </nav>
                 </div>
                 <div class="col-4 text-end">
-                    <a th:href="@{|/main/community?page=${communityList.totalPages}|}">마지막으로</a>
+                    <a th:href="@{|/main/community?page=${communityList.totalPages}&search=${search}|}" th:attrappend="search=${search}">마지막으로</a>
                 </div>
             </div>
         </div>

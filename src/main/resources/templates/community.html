@@ -122,28 +122,31 @@
         <div class="col-10">
             <div class="row">
                 <div class="col-4 text-start">
-                    <a th:href="@{|/main/community?page=1&search=${search}|}" th:attrappend="search=${search}">처음으로</a>
+                    <a th:if="${search != null}" th:href="@{|/main/community?page=1&search=${search}|}">처음으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/community?page=1|}">처음으로</a>
                 </div>
                 <div class="col-4">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <!-- "이전" 버튼 -->
                             <li class="page-item" th:class="${communityList.number == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${communityList.number != 0}" th:href="@{|/main/community?page=${communityList.number}|}" th:attrappend="search=${search}">&lt;</a>
+                                <a class="page-link" th:if="${communityList.number != 0}" th:href="@{|/main/community?page=${communityList.number}|}">&lt;</a>
                             </li>
                             <!-- 페이지 번호 버튼 -->
                             <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == communityList.number + 1 ? 'active' : ''}" class="page-item">
-                                <a class="page-link" th:href="@{|/main/community?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
+                                <a class="page-link" th:if="${search != null}" th:href="@{|/main/community?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
+                                <a class="page-link" th:unless="${search != null}" th:href="@{|/main/community?page=${pageNum}|}" th:text="${pageNum}"></a>
                             </li>
                             <!-- "다음" 버튼 -->
                             <li class="page-item" th:class="${communityList.number + 1 >= communityList.totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${communityList.number + 1 < communityList.totalPages}" th:href="@{|/main/community?page=${communityList.number + 2}|}" th:attrappend="search=${search}">&gt;</a>
+                                <a class="page-link" th:if="${communityList.number + 1 < communityList.totalPages}" th:href="@{|/main/community?page=${communityList.number + 2}|}">&gt;</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-4 text-end">
-                    <a th:href="@{|/main/community?page=${communityList.totalPages}&search=${search}|}" th:attrappend="search=${search}">마지막으로</a>
+                    <a th:if="${search != null}" th:href="@{|/main/community?page=${communityList.totalPages}&search=${search}|}">마지막으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/community?page=${communityList.totalPages}|}">마지막으로</a>
                 </div>
             </div>
         </div>

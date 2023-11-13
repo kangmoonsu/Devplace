@@ -28,7 +28,4 @@ public class RestfulController {
         }
         return map;
     }
-
-    // 좋아요 싫어요 처리하는 공간
-
 }

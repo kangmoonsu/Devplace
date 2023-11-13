@@ -97,12 +97,12 @@
 
 
             </pre>
-            <!-- 개추 비추-->
+            <!-- 추천 공간 -->
             <div class="row">
                 <div class="col text-end like">
-                    <i class="bi bi-chevron-down me-1" id="dislikeButton" style="cursor: pointer;"></i>
+                    <i class="bi bi-chevron-down me-1" style="cursor: pointer;" onclick="vote(false)"></i> <!-- 비추천 아이콘-->
                     <span id="likeCnt"></span> <!-- 추천 숫자 -->
-                    <i class="bi bi-chevron-up ms-1" id="likeButton" style="cursor: pointer;"></i>
+                    <i class="bi bi-chevron-up ms-1" style="cursor: pointer;" onclick="vote(true)"></i> <!-- 추천 아이콘 -->
                 </div>
             </div>
 
@@ -114,8 +114,8 @@
             </div>
 
             <!-- 댓글 작성 -->
+            <!-- 로그인한 사용자에게 보여질 입력 창 -->
             <div th:if="${session.user != null}">
-                <!-- 로그인한 사용자에게 보여질 입력 창 -->
                 <div class="row mt-3">
                     <div class="col-1">
                         <img th:src="@{|/upload/${session.user.imagePath}|}" id="commentImg" alt="">
@@ -130,9 +130,8 @@
                     </div>
                 </div>
             </div>
-
+            <!-- 로그인하지 않은 사용자에게 보여질 입력 창 -->
             <div th:unless="${session.user != null}">
-                <!-- 로그인하지 않은 사용자에게 보여질 입력 창 -->
                 <div class="row mt-3">
                     <div class="col mx-0 px-0">
                         <textarea name="comment" id="commentTextPlaceholder" cols="" rows="" class="form-control" placeholder="로그인 이후 작성해주세요."></textarea>
@@ -142,10 +141,7 @@
             <hr>
 
             <!-- 댓글 목록-->
-            <div class="row" id="comment-list">
-
-            </div>
-
+            <div class="row" id="comment-list"></div>
 
         </div>
         <div class="col-2 bg"></div>
@@ -291,6 +287,23 @@
         });
     }
 
+    function vote(like) {
+        $.ajax({
+            type: "post",
+            url: "/like/vote",
+            data: {
+                "postId": postId,
+                "userId": userId,
+                "like": like
+            },
+            success: function (res) {
+                document.getElementById("likeCnt").textContent = res.likeCount;
+            },
+            error: function (err) {
+                console.log("투표 실패", err);
+            }
+        });
+    }
 
     window.addEventListener("DOMContentLoaded",function (){
     fetchCommentList();

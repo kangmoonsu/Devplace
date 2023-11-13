@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "like_entity")
+@Table(name = "post_user_likes")
 public class LikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class LikeEntity {
     @JoinColumn(name = "postId")
     private PostEntity postEntity;
 
-    @Column
-    private int liked; // 1: 좋아요, -1: 싫어요 , 0: 안누른 상태
+    @Column(name = "likeStatus")
+    private boolean likeStatus; // true: 추천, false: 비추천
 }

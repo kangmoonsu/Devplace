@@ -41,6 +41,17 @@ public class PostEntity extends DateEntity {
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeEntity> postUserLikes = new ArrayList<>();
+
+    // 메서드를 통해 동적으로 추천 수 및 비추천 수를 계산
+    public int getLikeCnt() {
+        return (int) postUserLikes.stream().filter(LikeEntity::isLikeStatus).count();
+    }
+    public int getDislikeCnt() {
+        return (int) postUserLikes.stream().filter(like -> !like.isLikeStatus()).count();
+    }
+
     // 게시물의 댓글 갯수
     public int getCommentCount() {
         return commentEntityList.size();
@@ -48,9 +59,6 @@ public class PostEntity extends DateEntity {
 
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ImageEntity> imageEntityList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<LikeEntity> likeEntityList = new ArrayList<>();
 
     public static PostEntity toSaveEntity(PostDTO postDTO, UserEntity userEntity) {
         return PostEntity.builder()

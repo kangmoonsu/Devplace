@@ -157,10 +157,26 @@
     let userId = null;
     const postId = window.location.href.match(/\/post\/(\d+)/)[1];
 
+    function getPostLike(){
+        $.ajax({
+            type: "get",
+            url: "/like/getLikes",
+            data: {
+                "postId": postId
+            },
+            success: function (res) {
+                document.getElementById("likeCnt").textContent = res.likeCount;
+            },
+            error: function (err) {
+                console.log("사용자 정보를 불러오는데 실패했습니다.", err);
+            }
+        });
+    }
+
     function getSessionId(){
         $.ajax({
             type: "get",
-            url: "/rest/checkSession", // RestfulController의 endpoint 주소
+            url: "/rest/checkSession",
             success: function (response) {
                 if (response.result === "success") {
                     userId = response.id;
@@ -288,6 +304,12 @@
     }
 
     function vote(like) {
+
+        if (!userId) {
+            alert('로그인 후 이용해주세요!');
+            return;
+        }
+
         $.ajax({
             type: "post",
             url: "/like/vote",
@@ -297,10 +319,11 @@
                 "like": like
             },
             success: function (res) {
-                document.getElementById("likeCnt").textContent = res.likeCount;
+                getPostLike();
+                console.log("추천 성공", res);
             },
             error: function (err) {
-                console.log("투표 실패", err);
+                console.log("추천 실패", err);
             }
         });
     }
@@ -309,6 +332,7 @@
     fetchCommentList();
     getSessionId();
     formatTimeAgo();
+    getPostLike();
 })
 </script>
 </html>

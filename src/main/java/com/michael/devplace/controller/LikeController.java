@@ -3,10 +3,7 @@ package com.michael.devplace.controller;
 import com.michael.devplace.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +21,19 @@ public class LikeController {
         likeService.vote(postId, userId, like);
         int likeCount = likeService.getLikeCount(postId) - likeService.getDislikeCount(postId);
         map.put("likeCount", likeCount);
+        return map;
+    }
+
+    @GetMapping("/getLikes")
+    public Map<String, Object> getLikes(@RequestParam Integer postId){
+        Map<String, Object> map = new HashMap<>();
+        if (postId == null) {
+            map.put("result", "fail");
+        } else {
+            int likeCount = likeService.getLikeCount(postId) - likeService.getDislikeCount(postId);
+            map.put("result", "success");
+            map.put("likeCount", likeCount);
+        }
         return map;
     }
 }

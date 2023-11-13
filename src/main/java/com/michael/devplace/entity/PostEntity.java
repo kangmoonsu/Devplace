@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "post")
-public class PostEntity extends DateEntity{
+public class PostEntity extends DateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -38,17 +38,21 @@ public class PostEntity extends DateEntity{
     @Column
     private int viewCnt;
 
-    @OneToMany(mappedBy = "postEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    // 게시물의 댓글 갯수
     public int getCommentCount() {
         return commentEntityList.size();
     }
 
-    @OneToMany(mappedBy = "postEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ImageEntity> imageEntityList = new ArrayList<>();
 
-    public static PostEntity toSaveEntity(PostDTO postDTO, UserEntity userEntity){
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<LikeEntity> likeEntityList = new ArrayList<>();
+
+    public static PostEntity toSaveEntity(PostDTO postDTO, UserEntity userEntity) {
         return PostEntity.builder()
                 .id(postDTO.getId())
                 .userEntity(userEntity)
@@ -60,7 +64,7 @@ public class PostEntity extends DateEntity{
                 .build();
     }
 
-    public static PostEntity toUpdateEntity(PostDTO postDTO, UserEntity userEntity){
+    public static PostEntity toUpdateEntity(PostDTO postDTO, UserEntity userEntity) {
         return PostEntity.builder()
                 .id(postDTO.getId())
                 .userEntity(userEntity)

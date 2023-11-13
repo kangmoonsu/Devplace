@@ -42,6 +42,9 @@ public class UserEntity extends DateEntity{
     @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY) // PostEntity 엔티티의 user 필드와 매핑
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<LikeEntity> likeEntityList = new ArrayList<>();
+
     public static UserEntity toUserEntity(UserDTO userDTO) {
 
         if (userDTO.getImage() == null) {

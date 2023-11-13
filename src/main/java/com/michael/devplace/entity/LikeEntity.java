@@ -25,5 +25,5 @@ public class LikeEntity {
     private PostEntity postEntity;
 
     @Column
-    private boolean liked; // true: 좋아요, false: 싫어요
+    private int liked; // 1: 좋아요, -1: 싫어요 , 0: 안누른 상태
 }

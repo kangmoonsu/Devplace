@@ -51,4 +51,10 @@ public class LikeService {
     public int getDislikeCount(Integer postId) {
         return likeRepository.getDislikeCountByPostId(postId);
     }
+
+    @Transactional
+    public boolean getUserLikeStatus(Integer postId, Integer userId) {
+        LikeEntity likeEntity = likeRepository.findByUserEntityIdAndPostEntityId(userId, postId);
+        return likeEntity != null && likeEntity.isLikeStatus();
+    }
 }

@@ -17,23 +17,32 @@ public class LikeController {
 
     @PostMapping("/vote")
     public Map<String, Object> vote(@RequestParam Integer postId, @RequestParam Integer userId, @RequestParam boolean like) throws ChangeSetPersister.NotFoundException {
-        Map<String, Object> map = new HashMap<>();
         likeService.vote(postId, userId, like);
+
+        Map<String, Object> map = new HashMap<>();
+
+        int likeCount = likeService.getLikeCount(postId) - likeService.getDislikeCount(postId);
+        boolean userLikeStatus = likeService.getUserLikeStatus(postId, userId);
+
+        map.put("likeCount", likeCount);
+        map.put("userLikeStatus", userLikeStatus);
+
+        return map;
+    }
+
+    @GetMapping("/getLikes")
+    public Map<String, Object> getLikes(@RequestParam Integer postId) {
+        Map<String, Object> map = new HashMap<>();
         int likeCount = likeService.getLikeCount(postId) - likeService.getDislikeCount(postId);
         map.put("likeCount", likeCount);
         return map;
     }
 
-    @GetMapping("/getLikes")
-    public Map<String, Object> getLikes(@RequestParam Integer postId){
+    @GetMapping("/userLikeStatus")
+    public Map<String, Object> getUserVoteStatus(@RequestParam Integer postId, @RequestParam Integer userId) {
         Map<String, Object> map = new HashMap<>();
-        if (postId == null) {
-            map.put("result", "fail");
-        } else {
-            int likeCount = likeService.getLikeCount(postId) - likeService.getDislikeCount(postId);
-            map.put("result", "success");
-            map.put("likeCount", likeCount);
-        }
+        boolean userLikeStatus = likeService.getUserLikeStatus(postId, userId);
+        map.put("userLikeStatus", userLikeStatus);
         return map;
     }
 }

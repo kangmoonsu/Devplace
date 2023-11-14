@@ -153,10 +153,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script th:inline="javascript">
-
     let userId = null;
+
     const postId = window.location.href.match(/\/post\/(\d+)/)[1];
 
+    // 추천 개수 불러오기
     function getPostLike(){
         $.ajax({
             type: "get",
@@ -171,6 +172,74 @@
                 console.log("사용자 정보를 불러오는데 실패했습니다.", err);
             }
         });
+    }
+
+    // 추천하기
+    function vote(like) {
+
+        if (!userId) {
+            alert('로그인 후 이용해주세요!');
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/like/vote",
+            data: {
+                "postId": postId,
+                "userId": userId,
+                "like": like
+            },
+            success: function (res) {
+                getPostLike();
+                console.log("추천 성공", res);
+            },
+            error: function (err) {
+                console.log("추천 실패", err);
+            }
+        });
+    }
+
+    function getUserLikeStatus() {
+
+
+        $.ajax({
+            type: "get",
+            url: "/like/userLikeStatus",
+            data: {
+                "postId": postId,
+                "userId": userId
+            },
+            success: function (res) {
+                const userLikeStatus = res.userLikeStatus;
+                console.log(res.userLikeStatus);
+                setVoteButtonStatus(userLikeStatus);
+            },
+            error: function (err) {
+                console.log("추천 정보를 불러오는데 실패했습니다.", err);
+            }
+        });
+    }
+
+
+
+    function setVoteButtonStatus(userLikeStatus) {
+        const likeButton = document.querySelector('.bi-chevron-up');
+        const dislikeButton = document.querySelector('.bi-chevron-down');
+
+        if (userLikeStatus === null) {
+            // 투표 정보가 없는 경우
+            likeButton.classList.remove('disabled');
+            dislikeButton.classList.remove('disabled');
+        } else if (userLikeStatus) {
+            // 추천한 경우
+            likeButton.classList.add('disabled');
+            dislikeButton.classList.remove('disabled');
+        } else {
+            // 비추천한 경우
+            likeButton.classList.remove('disabled');
+            dislikeButton.classList.add('disabled');
+        }
     }
 
     function getSessionId(){
@@ -303,36 +372,12 @@
         });
     }
 
-    function vote(like) {
-
-        if (!userId) {
-            alert('로그인 후 이용해주세요!');
-            return;
-        }
-
-        $.ajax({
-            type: "post",
-            url: "/like/vote",
-            data: {
-                "postId": postId,
-                "userId": userId,
-                "like": like
-            },
-            success: function (res) {
-                getPostLike();
-                console.log("추천 성공", res);
-            },
-            error: function (err) {
-                console.log("추천 실패", err);
-            }
-        });
-    }
-
     window.addEventListener("DOMContentLoaded",function (){
     fetchCommentList();
     getSessionId();
     formatTimeAgo();
     getPostLike();
+    getUserLikeStatus();
 })
 </script>
 </html>

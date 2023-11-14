@@ -39,10 +39,7 @@ public class LikeController {
     }
 
     @GetMapping("/userLikeStatus")
-    public Map<String, Object> getUserVoteStatus(@RequestParam Integer postId, @RequestParam Integer userId) {
-        Map<String, Object> map = new HashMap<>();
-        boolean userLikeStatus = likeService.getUserLikeStatus(postId, userId);
-        map.put("userLikeStatus", userLikeStatus);
-        return map;
+    public boolean getUserVoteStatus(@RequestParam Integer postId, @RequestParam Integer userId) {
+        return likeService.getUserLikeStatus(postId, userId);
     }
 }

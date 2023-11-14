@@ -154,9 +154,9 @@
 </body>
 <script th:inline="javascript">
     let userId = null;
-
     const postId = window.location.href.match(/\/post\/(\d+)/)[1];
-
+    let likeButtonClicked = false;
+    let dislikeButtonClicked = false;
     // 추천 개수 불러오기
     function getPostLike(){
         $.ajax({
@@ -176,7 +176,6 @@
 
     // 추천하기
     function vote(like) {
-
         if (!userId) {
             alert('로그인 후 이용해주세요!');
             return;
@@ -191,6 +190,12 @@
                 "like": like
             },
             success: function (res) {
+                // 투표 정보 업데이트
+                likeButtonClicked = res.userLikeStatus === true;
+                dislikeButtonClicked = res.userLikeStatus === false;
+
+                // 추천 버튼 상태 업데이트
+                setVoteButtonStatus(res.userLikeStatus);
                 getPostLike();
                 console.log("추천 성공", res);
             },
@@ -200,60 +205,64 @@
         });
     }
 
-    function getUserLikeStatus() {
-
+    function getUserLikeStatus(userId) {
+        const requestData = userId ? { "postId": postId, "userId": userId } : { "postId": postId };
 
         $.ajax({
             type: "get",
             url: "/like/userLikeStatus",
-            data: {
-                "postId": postId,
-                "userId": userId
-            },
+            data: requestData,
             success: function (res) {
-                const userLikeStatus = res.userLikeStatus;
-                console.log(res.userLikeStatus);
-                setVoteButtonStatus(userLikeStatus);
+                const userLikeStatus = res;
+                console.log(userLikeStatus);
+                // 'null'을 '안누름' 상태로 처리
+                if (userLikeStatus === null) {
+                    // '안누름' 상태로 처리하는 로직 추가
+                } else {
+                    // 투표 상태에 따라 UI 업데이트
+                    setVoteButtonStatus(userLikeStatus);
+                }
             },
-            error: function (err) {
-                console.log("추천 정보를 불러오는데 실패했습니다.", err);
+            error: function (xhr, status, error) {
+                console.log("에러 상태:", status);
+                console.log("에러 메시지:", error);
+                console.log("서버 응답:", xhr.responseText);
+                console.log("추천 정보를 불러오는데 실패했습니다.", error);
             }
         });
     }
-
-
 
     function setVoteButtonStatus(userLikeStatus) {
         const likeButton = document.querySelector('.bi-chevron-up');
         const dislikeButton = document.querySelector('.bi-chevron-down');
 
+        // 투표 정보가 없는 경우 또는 사용자가 취소한 경우
         if (userLikeStatus === null) {
-            // 투표 정보가 없는 경우
             likeButton.classList.remove('disabled');
             dislikeButton.classList.remove('disabled');
         } else if (userLikeStatus) {
             // 추천한 경우
-            likeButton.classList.add('disabled');
+            likeButton.classList.toggle('disabled', likeButtonClicked);
             dislikeButton.classList.remove('disabled');
         } else {
             // 비추천한 경우
             likeButton.classList.remove('disabled');
-            dislikeButton.classList.add('disabled');
+            dislikeButton.classList.toggle('disabled', dislikeButtonClicked);
         }
     }
 
-    function getSessionId(){
+    function getSessionId() {
         $.ajax({
             type: "get",
             url: "/rest/checkSession",
             success: function (response) {
                 if (response.result === "success") {
                     userId = response.id;
+                    // userId를 얻은 후 getUserLikeStatus 함수 호출
+                    getUserLikeStatus(userId);
                 } else {
-                    // 사용자가 로그인하지 않은 경우에 대한 처리
-                }
 
-                // 이후에 사용자 아이디(userId)를 사용하는 코드를 작성할 수 있습니다.
+                }
             },
             error: function (err) {
                 console.log("사용자 정보를 불러오는데 실패했습니다.", err);
@@ -293,10 +302,9 @@
             },
             success: function (commentList) {
                 const commentListContainer = $('#comment-list');
-                commentListContainer.empty(); // Clear the existing comment list
+                commentListContainer.empty();
 
                 commentList.forEach(function (comment) {
-                    // Extract data from the comment object
                     const userImage = comment.userDTO.imagePath;
                     const userNickname = comment.userDTO.nickname;
                     const createdTime = comment.commentDTO.createdTime;
@@ -377,7 +385,6 @@
     getSessionId();
     formatTimeAgo();
     getPostLike();
-    getUserLikeStatus();
 })
 </script>
 </html>

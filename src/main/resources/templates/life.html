@@ -53,8 +53,8 @@
             <a th:href="@{/post/community}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> 작성하기</a>
         </div>
         <div class="col-4 text-center">
-            <a th:href="@{/main/community/life}" class="btn btn-lg">사는 얘기</a>
-            <a th:href="@{/main/community/shareInfo}" class="btn btn-lg btn-outline-primary">공유</a>
+            <a th:href="@{/main/community/life}" class="btn btn-lg btn-outline-primary">사는 얘기</a>
+            <a th:href="@{/main/community/shareInfo}" class="btn btn-lg">공유</a>
             <a th:href="@{/main/community}" class="btn btn-lg">전체</a>
         </div>
         <div class="col-3"></div>
@@ -65,7 +65,7 @@
         <div class="col-4"></div>
         <div class="col-4">
             <form class="input-group" action="/main/community" method="get">
-                <input type="text" name="search" class="form-control" placeholder="공유 내에서 검색" aria-label="Search" aria-describedby="search-button" th:value="${search}">
+                <input type="text" name="search" class="form-control" placeholder="사는 얘기 내에서 검색" aria-label="Search" aria-describedby="search-button" th:value="${search}">
                 <!-- 추가: th:value="${search}"를 사용하여 서칭 값 설정 -->
                 <button class="btn btn-primary" type="submit" id="search-button">
                     <i class="bi bi-search"></i>
@@ -122,31 +122,31 @@
         <div class="col-10">
             <div class="row">
                 <div class="col-4 text-start">
-                    <a th:if="${search != null}" th:href="@{|/main/community/shareInfo?page=1&search=${search}|}">처음으로</a>
-                    <a th:unless="${search != null}" th:href="@{|/main/community/shareInfo?page=1|}">처음으로</a>
+                    <a th:if="${search != null}" th:href="@{|/main/community/life?page=1&search=${search}|}">처음으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/community/life?page=1|}">처음으로</a>
                 </div>
                 <div class="col-4">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <!-- "이전" 버튼 -->
                             <li class="page-item" th:class="${communityList.number == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${communityList.number != 0}" th:href="@{|/main/community/shareInfo?page=${communityList.number}|}">&lt;</a>
+                                <a class="page-link" th:if="${communityList.number != 0}" th:href="@{|/main/community/life?page=${communityList.number}|}">&lt;</a>
                             </li>
                             <!-- 페이지 번호 버튼 -->
                             <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == communityList.number + 1 ? 'active' : ''}" class="page-item">
-                                <a class="page-link" th:if="${search != null}" th:href="@{|/main/community/shareInfo?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
-                                <a class="page-link" th:unless="${search != null}" th:href="@{|/main/community/shareInfo?page=${pageNum}|}" th:text="${pageNum}"></a>
+                                <a class="page-link" th:if="${search != null}" th:href="@{|/main/community/life?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
+                                <a class="page-link" th:unless="${search != null}" th:href="@{|/main/community/life?page=${pageNum}|}" th:text="${pageNum}"></a>
                             </li>
                             <!-- "다음" 버튼 -->
                             <li class="page-item" th:class="${communityList.number + 1 >= communityList.totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${communityList.number + 1 < communityList.totalPages}" th:href="@{|/main/community/shareInfo?page=${communityList.number + 2}|}">&gt;</a>
+                                <a class="page-link" th:if="${communityList.number + 1 < communityList.totalPages}" th:href="@{|/main/community/life?page=${communityList.number + 2}|}">&gt;</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-4 text-end">
-                    <a th:if="${search != null}" th:href="@{|/main/community/shareInfo?page=${communityList.totalPages}&search=${search}|}">마지막으로</a>
-                    <a th:unless="${search != null}" th:href="@{|/main/community/shareInfo?page=${communityList.totalPages}|}">마지막으로</a>
+                    <a th:if="${search != null}" th:href="@{|/main/community/life?page=${communityList.totalPages}&search=${search}|}">마지막으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/community/life?page=${communityList.totalPages}|}">마지막으로</a>
                 </div>
             </div>
         </div>

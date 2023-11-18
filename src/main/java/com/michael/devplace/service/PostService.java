@@ -7,10 +7,7 @@ import com.michael.devplace.entity.CommentEntity;
 import com.michael.devplace.entity.ImageEntity;
 import com.michael.devplace.entity.PostEntity;
 import com.michael.devplace.entity.UserEntity;
-import com.michael.devplace.repository.CommentRepository;
-import com.michael.devplace.repository.ImageRepository;
-import com.michael.devplace.repository.PostRepository;
-import com.michael.devplace.repository.UserRepository;
+import com.michael.devplace.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +27,7 @@ import java.util.*;
 public class PostService {
 
     @Autowired
-    private UserRepository userRepository;
+    private LikeRepository likeRepository;
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -52,7 +49,6 @@ public class PostService {
             PostEntity post = postRepository.findById(savedId).get();
             for (MultipartFile file : imageArray) {
                 if (file.isEmpty()) {
-
                     continue;
                 }
                 String originalImgName = file.getOriginalFilename();
@@ -67,15 +63,33 @@ public class PostService {
     }
 
 
+    // 커뮤니티 전체 버전
     @Transactional
     public Page<Map<String, Object>> communityList(Pageable pageable) {
         int pageLimit = 10;
         int page = pageable.getPageNumber() - 1;
-
         pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
-
         Page<PostEntity> postEntities = postRepository.findByPostTypeOrderByIdDesc("community", pageable);
+        return getPostDTOs(postEntities);
+    }
 
+    // 사는 얘기 전체 버전
+    @Transactional
+    public Page<Map<String, Object>> lifeList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.findByTopicOrderByIdDesc("life", pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    // 공유 전체 버전
+    @Transactional
+    public Page<Map<String, Object>> shareInfoList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.findByTopicOrderByIdDesc("shareInfo", pageable);
         return getPostDTOs(postEntities);
     }
 
@@ -98,23 +112,22 @@ public class PostService {
             UserEntity userEntity = postEntity.getUserEntity();
             UserDTO userDTO = UserDTO.toUserDTO(userEntity);
             int commentCnt = postEntity.getCommentCount();
+
             map.put("postDTO", postDTO);
             map.put("userDTO", userDTO);
             map.put("commentCnt", commentCnt);
         }
-
         return map;
     }
 
     public List<Map<String, Object>> commentList(Integer id) {
         List<Map<String, Object>> list = new ArrayList<>();
         List<CommentEntity> commentEntityList = commentRepository.findByPostEntityIdOrderByIdDesc(id);
-        for (CommentEntity commentEntity : commentEntityList){
+        for (CommentEntity commentEntity : commentEntityList) {
             Map<String, Object> map = new HashMap<>();
 
             UserEntity userEntity = commentEntity.getUserEntity();
             UserDTO userDTO = UserDTO.toUserDTO(userEntity);
-
             CommentDTO commentDTO = CommentDTO.toCommentDTO(commentEntity);
 
             map.put("userDTO", userDTO);
@@ -124,12 +137,30 @@ public class PostService {
         return list;
     }
 
+    // 커뮤니티 전체 검색 버전
     public Page<Map<String, Object>> searchedCommunityList(String search, Pageable pageable) {
         int pageLimit = 10;
         int page = pageable.getPageNumber() - 1;
-
         pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
         Page<PostEntity> postEntities = postRepository.searchCommunityPosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    // 사는얘기 검색 버전
+    public Page<Map<String, Object>> searchedLifeList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchLifePosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    // 공유 검색 버전
+    public Page<Map<String, Object>> searchedShareInfoList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchShareInfoPosts(search, pageable);
         return getPostDTOs(postEntities);
     }
 
@@ -141,7 +172,16 @@ public class PostService {
             UserEntity userEntity = postEntity.getUserEntity();
             UserDTO userDTO = UserDTO.toUserDTO(userEntity);
             PostDTO postDTO = PostDTO.toPostDTO(postEntity);
+
             int commentCnt = postEntity.getCommentCount();
+
+            // 추천 수
+            int postId = postEntity.getId();
+            int likeCount = likeRepository.getLikeCountByPostId(postId);
+            int dislikeCount = likeRepository.getDislikeCountByPostId(postId);
+            int netLikes = likeCount - dislikeCount;
+
+            map.put("netLikes", netLikes);
             map.put("postDTO", postDTO);
             map.put("userDTO", userDTO);
             map.put("commentCnt", commentCnt);

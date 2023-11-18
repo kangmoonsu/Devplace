@@ -30,12 +30,13 @@ public class PostController {
 
         return "communityPost";
     }
-    @GetMapping("/life")
+    // 사는얘기
+    @GetMapping("/community/life")
     public String lifePost(){
         return "life";
     }
-
-    @GetMapping("shareInfo")
+    // 공유
+    @GetMapping("/community/shareInfo")
     public String shareInfoPost(){
         return "shareInfo";
     }

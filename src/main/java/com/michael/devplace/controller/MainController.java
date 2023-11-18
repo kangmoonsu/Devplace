@@ -31,6 +31,7 @@ public class MainController {
         return "main";
     }
 
+    // 커뮤니티 전체 리스트
     @GetMapping("/main/community")
     public String community(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model) {
         UserDTO userDTO = (UserDTO) session.getAttribute("user");
@@ -49,14 +50,68 @@ public class MainController {
             communityList = postService.communityList(pageable);
         }
         int blockLimit = 5;
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = Math.min((startPage + blockLimit - 1), communityList.getTotalPages());
-
-
 
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("communityList", communityList);
         return "community";
+    }
+
+
+    // 사는얘기
+    @GetMapping("/main/community/life")
+    public String lifePost(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null) {
+            model.addAttribute("userDTO", userDTO);
+        }
+
+        Page<Map<String, Object>> communityList;
+        System.out.println(search);
+        if (search != null && !search.isEmpty()) {
+            // 검색어로 필터링된 포스트 목록 가져오기
+            communityList = postService.searchedLifeList(search, pageable);
+            model.addAttribute("search", search);
+        } else {
+            // 검색어가 없는 경우 모든 포스트 가져오기
+            communityList = postService.lifeList(pageable);
+        }
+        int blockLimit = 5;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), communityList.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("communityList", communityList);
+        return "life";
+    }
+    // 공유
+    @GetMapping("/main/community/shareInfo")
+    public String shareInfo(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null) {
+            model.addAttribute("userDTO", userDTO);
+        }
+
+        Page<Map<String, Object>> communityList;
+        System.out.println(search);
+        if (search != null && !search.isEmpty()) {
+            // 검색어로 필터링된 포스트 목록 가져오기
+            communityList = postService.searchedShareInfoList(search, pageable);
+            model.addAttribute("search", search);
+        } else {
+            // 검색어가 없는 경우 모든 포스트 가져오기
+            communityList = postService.shareInfoList(pageable);
+        }
+        int blockLimit = 5;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), communityList.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("communityList", communityList);
+        return "shareInfo";
     }
 }

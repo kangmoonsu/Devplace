@@ -35,33 +35,13 @@ public class PostService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public void postCommunity(PostDTO postDTO, HttpSession session, MultipartFile[] imageArray) throws IOException {
-        // 게시글 타입 설정
+    // 커뮤니티 글 작성
+    public void postCommunity(PostDTO postDTO, HttpSession session) {
         postDTO.setPostType("community");
-        // 현재 세션에서 사용자 정보 가져오기
         UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
-
         PostEntity postEntity = PostEntity.toSaveEntity(postDTO, userEntity);
-        if (imageArray == null) {
-            postRepository.save(postEntity);
-        } else {
-            Integer savedId = postRepository.save(postEntity).getId();
-            PostEntity post = postRepository.findById(savedId).get();
-            for (MultipartFile file : imageArray) {
-                if (file.isEmpty()) {
-                    continue;
-                }
-                String originalImgName = file.getOriginalFilename();
-                String storedImgName = System.currentTimeMillis() + "_" + originalImgName;
-                String savePath = "C:/springboot_img/" + storedImgName;
-                file.transferTo(new File(savePath));
-
-                ImageEntity imageEntity = ImageEntity.toImageEntity(post, originalImgName, storedImgName);
-                imageRepository.save(imageEntity);
-            }
-        }
+        postRepository.save(postEntity);
     }
-
 
     // 커뮤니티 전체 버전
     @Transactional

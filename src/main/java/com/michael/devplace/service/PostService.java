@@ -4,11 +4,9 @@ import com.michael.devplace.dto.CommentDTO;
 import com.michael.devplace.dto.PostDTO;
 import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.entity.CommentEntity;
-import com.michael.devplace.entity.ImageEntity;
 import com.michael.devplace.entity.PostEntity;
 import com.michael.devplace.entity.UserEntity;
 import com.michael.devplace.repository.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,14 +29,13 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
     @Autowired
-    private ImageRepository imageRepository;
-    @Autowired
     private CommentRepository commentRepository;
 
     // 커뮤니티 글 작성
     public void postCommunity(PostDTO postDTO, HttpSession session) {
         postDTO.setPostType("community");
         UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
+         // 왜 updateEntity로 되어 있지?
         PostEntity postEntity = PostEntity.toSaveEntity(postDTO, userEntity);
         postRepository.save(postEntity);
     }

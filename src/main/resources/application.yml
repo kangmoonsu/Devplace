@@ -1,5 +1,7 @@
 server:
   port: 9711
+  tomcat:
+    max-http-form-post-size: 2MB
 
 spring:
   datasource:

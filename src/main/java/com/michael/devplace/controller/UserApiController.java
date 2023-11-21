@@ -1,8 +1,6 @@
 package com.michael.devplace.controller;
 
 import com.michael.devplace.dto.UserDTO;
-import com.michael.devplace.service.LikeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -11,10 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/rest")
-public class RestfulController {
-
-    @Autowired
-    private LikeService likeService;
+public class UserApiController {
 
     @GetMapping("/checkSession")
     public Map<String, Object> checkSession(HttpSession session) {

@@ -4,6 +4,7 @@ import com.michael.devplace.dto.PostDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class PostEntity extends DateEntity {
     @Column
     private String title;
 
-    @Column(length = 2000)
+    @Lob
     private String content;
 
     @Column

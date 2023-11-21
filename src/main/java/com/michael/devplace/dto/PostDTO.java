@@ -5,6 +5,8 @@ import com.michael.devplace.entity.PostEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Lob;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ public class PostDTO {
 
     private String title;
 
+    @Lob
     private String content;
 
     private String postType;

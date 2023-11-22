@@ -66,8 +66,8 @@
         <div class="col-4 text-center">
             <a th:href="@{/main/qa/tech}" class="btn btn-lg">기술</a>
             <a th:href="@{/main/qa/career}" class="btn btn-lg">커리어</a>
-            <a th:href="@{/main/qa/etc}" class="btn btn-lg">기타</a>
-            <a th:href="@{/main/qa}" class="btn btn-lg btn-outline-primary">전체</a>
+            <a th:href="@{/main/qa/etc}" class="btn btn-lg btn-outline-primary">기타</a>
+            <a th:href="@{/main/qa}" class="btn btn-lg">전체</a>
         </div>
         <div class="col-3"></div>
     </div>
@@ -76,8 +76,8 @@
     <div class="row mt-5">
         <div class="col-4"></div>
         <div class="col-4">
-            <form class="input-group" action="/main/qa" method="get">
-                <input type="text" name="search" class="form-control" placeholder="Q&A 내에서 검색" aria-label="Search" aria-describedby="search-button" th:value="${search}">
+            <form class="input-group" action="/main/qa/career" method="get">
+                <input type="text" name="search" class="form-control" placeholder="기타 내에서 검색" aria-label="Search" aria-describedby="search-button" th:value="${search}">
                 <!-- 추가: th:value="${search}"를 사용하여 서칭 값 설정 -->
                 <button class="btn btn-primary" type="submit" id="search-button">
                     <i class="bi bi-search"></i>
@@ -92,7 +92,7 @@
     </pre>
 
     <!-- Qa 전체 리스트 -->
-    <div class="row" th:each="post : ${qaList}">
+    <div class="row" th:each="post : ${etcList}">
         <div class="col-1"></div>
         <div class="col-10">
             <div class="row">
@@ -119,12 +119,12 @@
                             </a>
                         </div>
                         <div class="col-4 mt-auto text-end">
-                                <span class="postMain">
-                                    <i class="bi bi-eye me-1"></i>
-                                    <span th:text="${post.postDTO.viewCnt}"></span>
-                                    <i class="bi bi-chevron-expand ms-2 me-1"></i>
-                                    <span th:text="${post.netLikes}"></span>
-                                </span>
+                            <span class="postMain">
+                                <i class="bi bi-eye me-1"></i>
+                                <span th:text="${post.postDTO.viewCnt}"></span>
+                                <i class="bi bi-chevron-expand ms-2 me-1"></i>
+                                <span th:text="${post.netLikes}"></span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -142,31 +142,31 @@
         <div class="col-10">
             <div class="row">
                 <div class="col-4 text-start">
-                    <a th:if="${search != null}" th:href="@{|/main/qa?page=1&search=${search}|}">처음으로</a>
-                    <a th:unless="${search != null}" th:href="@{|/main/qa?page=1|}">처음으로</a>
+                    <a th:if="${search != null}" th:href="@{|/main/qa/etc?page=1&search=${search}|}">처음으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/qa/etc?page=1|}">처음으로</a>
                 </div>
                 <div class="col-4">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <!-- "이전" 버튼 -->
-                            <li class="page-item" th:class="${qaList.number == 0} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${qaList.number != 0}" th:href="@{|/main/qa?page=${qaList.number}|}">&lt;</a>
+                            <li class="page-item" th:class="${etcList.number == 0} ? 'disabled' : ''">
+                                <a class="page-link" th:if="${etcList.number != 0}" th:href="@{|/main/qa/etc?page=${etcList.number}|}">&lt;</a>
                             </li>
                             <!-- 페이지 번호 버튼 -->
-                            <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == qaList.number + 1 ? 'active' : ''}" class="page-item">
-                                <a class="page-link" th:if="${search != null}" th:href="@{|/main/qa?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
-                                <a class="page-link" th:unless="${search != null}" th:href="@{|/main/qa?page=${pageNum}|}" th:text="${pageNum}"></a>
+                            <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == etcList.number + 1 ? 'active' : ''}" class="page-item">
+                                <a class="page-link" th:if="${search != null}" th:href="@{|/main/qa/etc?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
+                                <a class="page-link" th:unless="${search != null}" th:href="@{|/main/qa/etc?page=${pageNum}|}" th:text="${pageNum}"></a>
                             </li>
                             <!-- "다음" 버튼 -->
-                            <li class="page-item" th:class="${qaList.number + 1 >= qaList.totalPages} ? 'disabled' : ''">
-                                <a class="page-link" th:if="${qaList.number + 1 < qaList.totalPages}" th:href="@{|/main/qa?page=${qaList.number + 2}|}">&gt;</a>
+                            <li class="page-item" th:class="${etcList.number + 1 >= etcList.totalPages} ? 'disabled' : ''">
+                                <a class="page-link" th:if="${etcList.number + 1 < etcList.totalPages}" th:href="@{|/main/qa/etc?page=${etcList.number + 2}|}">&gt;</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-4 text-end">
-                    <a th:if="${search != null}" th:href="@{|/main/qa?page=${qaList.totalPages}&search=${search}|}">마지막으로</a>
-                    <a th:unless="${search != null}" th:href="@{|/main/qa?page=${qaList.totalPages}|}">마지막으로</a>
+                    <a th:if="${search != null}" th:href="@{|/main/qa/etc?page=${etcList.totalPages}&search=${search}|}">마지막으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/qa/etc?page=${etcList.totalPages}|}">마지막으로</a>
                 </div>
             </div>
         </div>

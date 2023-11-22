@@ -9,16 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
     // postType = community의 게시글 불러오는 List
-    // 커뮤니티 전체 버전
+    // postType 별로
     Page<PostEntity> findByPostTypeOrderByIdDesc(String postType, Pageable pageable);
 
-    // 사는 얘기 / 공유 전체 버전
+    // 토픽별로
     Page<PostEntity> findByTopicOrderByIdDesc(String topic, Pageable pageable);
 
     // 조회수 1 증가
@@ -45,10 +43,29 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     Page<PostEntity> searchShareInfoPosts(@Param("search")String search, Pageable pageable);
 
 
+    // Qa 검색 버전
     @Query("SELECT p FROM PostEntity p " +
             "WHERE p.postType = 'qa' " +
             "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
-    Page<PostEntity> searchedQaPosts(String search, Pageable pageable);
+    Page<PostEntity> searchedQaPosts(@Param("search")String search, Pageable pageable);
+
+    // career 검색 버전
+    @Query("SELECT p FROM PostEntity p " +
+            "WHERE p.topic = 'career' " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<PostEntity> searchCareerPosts(@Param("search")String search, Pageable pageable);
+
+
+    // tech 검색 버전
+    @Query("SELECT p FROM PostEntity p " +
+            "WHERE p.topic = 'tech' " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<PostEntity> searchTechPosts(@Param("search")String search, Pageable pageable);
+
+
+    // tech 검색 버전
+    @Query("SELECT p FROM PostEntity p " +
+            "WHERE p.topic = 'etc' " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<PostEntity> searchEtcPosts(@Param("search")String search, Pageable pageable);
 }
-
-

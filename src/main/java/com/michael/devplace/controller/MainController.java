@@ -136,13 +136,85 @@ public class MainController {
         return "qa";
     }
 
-    @GetMapping("/main/tech")
-    public String tech(){
+    @GetMapping("/main/qa/tech")
+    public String tech(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null) {
+            model.addAttribute("userDTO", userDTO);
+        }
+
+        Page<Map<String, Object>> techList;
+
+        if (search != null && !search.isEmpty()) {
+            // 검색어로 필터링된 포스트 목록 가져오기
+            techList = postService.searchedTechList(search, pageable);
+            model.addAttribute("search", search);
+        } else {
+            // 검색어가 없는 경우 모든 포스트 가져오기
+            techList = postService.techList(pageable);
+        }
+        int blockLimit = 5;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), techList.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("techList", techList);
+
         return "tech";
     }
 
-    @GetMapping("/main/career")
-    public String career(){
+    @GetMapping("/main/qa/career")
+    public String career(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null) {
+            model.addAttribute("userDTO", userDTO);
+        }
+
+        Page<Map<String, Object>> careerList;
+
+        if (search != null && !search.isEmpty()) {
+            // 검색어로 필터링된 포스트 목록 가져오기
+            careerList = postService.searchedCareerList(search, pageable);
+            model.addAttribute("search", search);
+        } else {
+            // 검색어가 없는 경우 모든 포스트 가져오기
+            careerList = postService.careerList(pageable);
+        }
+        int blockLimit = 5;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), careerList.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("careerList", careerList);
         return "career";
+    }
+
+    @GetMapping("/main/qa/etc")
+    public String qaEtc(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null) {
+            model.addAttribute("userDTO", userDTO);
+        }
+
+        Page<Map<String, Object>> etcList;
+
+        if (search != null && !search.isEmpty()) {
+            // 검색어로 필터링된 포스트 목록 가져오기
+            etcList = postService.searchedEtcList(search, pageable);
+            model.addAttribute("search", search);
+        } else {
+            // 검색어가 없는 경우 모든 포스트 가져오기
+            etcList = postService.etcList(pageable);
+        }
+        int blockLimit = 5;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), etcList.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("etcList", etcList);
+        return "etc";
     }
 }

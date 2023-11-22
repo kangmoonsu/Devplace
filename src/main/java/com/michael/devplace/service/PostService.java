@@ -190,4 +190,52 @@ public class PostService {
         Page<PostEntity> postEntities = postRepository.findByPostTypeOrderByIdDesc("qa", pageable);
         return getPostDTOs(postEntities);
     }
+
+    public Page<Map<String, Object>> searchedCareerList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchCareerPosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    public Page<Map<String, Object>> careerList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.findByTopicOrderByIdDesc("career", pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    public Page<Map<String, Object>> searchedTechList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchTechPosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    public Page<Map<String, Object>> techList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.findByTopicOrderByIdDesc("tech", pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    public Page<Map<String, Object>> searchedEtcList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchEtcPosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    public Page<Map<String, Object>> etcList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.findByTopicOrderByIdDesc("etc", pageable);
+        return getPostDTOs(postEntities);
+    }
 }

@@ -4,7 +4,6 @@ import com.michael.devplace.dto.PostDTO;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +56,6 @@ public class PostEntity extends DateEntity {
     public int getCommentCount() {
         return commentEntityList.size();
     }
-
-    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ImageEntity> imageEntityList = new ArrayList<>();
 
     public static PostEntity toSaveEntity(PostDTO postDTO, UserEntity userEntity) {
         return PostEntity.builder()

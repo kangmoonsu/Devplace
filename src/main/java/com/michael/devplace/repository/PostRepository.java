@@ -45,6 +45,10 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     Page<PostEntity> searchShareInfoPosts(@Param("search")String search, Pageable pageable);
 
 
+    @Query("SELECT p FROM PostEntity p " +
+            "WHERE p.postType = 'qa' " +
+            "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<PostEntity> searchedQaPosts(String search, Pageable pageable);
 }
 
 

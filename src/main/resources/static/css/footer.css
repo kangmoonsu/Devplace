@@ -1,0 +1,18 @@
+footer {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #333; /* Dark text color */
+    padding: 20px 0; /* Padding top and bottom */
+    border-top: 1px solid #ccc; /* Top border */
+}
+
+footer p {
+    margin-bottom: 5px; /* Bottom margin for paragraphs */
+}
+
+footer a {
+    color: #007bff; /* Blue link color */
+}
+
+footer a:hover {
+    text-decoration: none; /* Remove underline on hover */
+}

@@ -165,4 +165,29 @@ public class PostService {
             return map;
         });
     }
+
+    public void postQa(PostDTO postDTO, HttpSession session) {
+        postDTO.setPostType("qa");
+        UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
+        PostEntity postEntity = PostEntity.toSaveEntity(postDTO, userEntity);
+        postRepository.save(postEntity);
+    }
+
+    // Qa 검색 리스트
+    public Page<Map<String, Object>> searchedQaList(String search, Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.searchedQaPosts(search, pageable);
+        return getPostDTOs(postEntities);
+    }
+
+    // Qa 전체 리스트
+    public Page<Map<String, Object>> qaList(Pageable pageable) {
+        int pageLimit = 10;
+        int page = pageable.getPageNumber() - 1;
+        pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
+        Page<PostEntity> postEntities = postRepository.findByPostTypeOrderByIdDesc("qa", pageable);
+        return getPostDTOs(postEntities);
+    }
 }

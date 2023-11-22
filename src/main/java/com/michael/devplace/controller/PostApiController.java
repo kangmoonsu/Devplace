@@ -18,10 +18,14 @@ public class PostApiController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/save")
-    public ResponseEntity<Integer> save(@RequestBody PostDTO postDTO, HttpSession session){
+    @PostMapping("/community")
+    public ResponseEntity<Integer> communitySave(@RequestBody PostDTO postDTO, HttpSession session){
         postService.postCommunity(postDTO, session);
         return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
     }
-
+    @PostMapping("/qa")
+    public ResponseEntity<Integer> qaSave(@RequestBody PostDTO postDTO, HttpSession session){
+        postService.postQa(postDTO, session);
+        return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
+    }
 }

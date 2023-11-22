@@ -1,10 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css">
+    <title><Dev: place/></title>
 </head>
+<style>
+    #community{
+        width: 1296px;
+        height: auto;
+    }
+    .postMain {
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+    .posttitle {
+        font-size: 24px;
+        font-weight: 550;
+    }
+
+    .userImg{
+        width: 30px;
+        height: auto;
+    }
+    #detail {
+        text-decoration: none; /* 링크 텍스트에 밑줄 제거 */
+        color: inherit; /* 링크 색상을 부모 요소에서 상속받음 */
+    }
+</style>
+
+
 <body>
+<div class="container">
+    <div th:replace="header :: header"></div>
+
+    <div class="row">
+        <div class="col">
+            <img src="/img/community1.jpg" alt="" id="community">
+        </div>
+    </div>
+
+    <!-- category / post btn-->
+    <hr>
+    <div class="row mt-4">
+        <div class="col-1"></div>
+        <div class="col-3">
+            <a th:href="@{/post/qa}" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> 작성하기</a>
+        </div>
+        <div class="col-4 text-center">
+            <a th:href="@{/main/qa/tech}" class="btn btn-lg">기술</a>
+            <a th:href="@{/main/qa/career}" class="btn btn-lg">커리어</a>
+            <a th:href="@{/main/qa/qa-etc}" class="btn btn-lg">기타</a>
+            <a th:href="@{/main/qa}" class="btn btn-lg btn-outline-primary">전체</a>
+        </div>
+        <div class="col-3"></div>
+    </div>
+
+    <!--Search-->
+    <div class="row mt-5">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form class="input-group" action="/main/qa" method="get">
+                <input type="text" name="search" class="form-control" placeholder="커뮤니티 내에서 검색" aria-label="Search" aria-describedby="search-button" th:value="${search}">
+                <!-- 추가: th:value="${search}"를 사용하여 서칭 값 설정 -->
+                <button class="btn btn-primary" type="submit" id="search-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <pre>
+
+
+    </pre>
+
+    <!-- 커뮤니티 전체 리스트 -->
+    <div class="row" th:each="post : ${qaList}">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <span class="postMain" th:text="${post.userDTO.nickname}"></span>
+                        <i class="bi bi-dot"></i>
+                        <span class="postMain" th:text="${post.postDTO.createdTime}" th:attr="data-created-time=${post.postDTO.createdTime}"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8 mt-4">
+                        <a id="detail" th:href="@{|/post/${post.postDTO.id}|}">
+                            <span class="posttitle text-break" th:text="${post.postDTO.title}"></span>
+                        </a>
+                    </div>
+                    <div class="col-4 mt-auto text-end">
+                        <span class="postMain">
+                            <i class="bi bi-eye me-1"></i>
+                            <span th:text="${post.postDTO.viewCnt}"></span>
+                            <i class="bi bi-chevron-expand ms-2 me-1"></i>
+                            <span th:text="${post.netLikes}"></span>
+                            <i class="ms-2 me-1 bi bi-chat-left-dots"></i>
+                            <span th:text="${post.commentCnt}"></span>
+                        </span>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+
+
+    <!-- paging -->
+    <div class="row mt-5">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4 text-start">
+                    <a th:if="${search != null}" th:href="@{|/main/qa?page=1&search=${search}|}">처음으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/qa?page=1|}">처음으로</a>
+                </div>
+                <div class="col-4">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <!-- "이전" 버튼 -->
+                            <li class="page-item" th:class="${qaList.number == 0} ? 'disabled' : ''">
+                                <a class="page-link" th:if="${qaList.number != 0}" th:href="@{|/main/qa?page=${qaList.number}|}">&lt;</a>
+                            </li>
+                            <!-- 페이지 번호 버튼 -->
+                            <li th:each="pageNum : ${#numbers.sequence(startPage, endPage)}" th:class="${pageNum == qaList.number + 1 ? 'active' : ''}" class="page-item">
+                                <a class="page-link" th:if="${search != null}" th:href="@{|/main/qa?page=${pageNum}&search=${search}|}" th:text="${pageNum}"></a>
+                                <a class="page-link" th:unless="${search != null}" th:href="@{|/main/qa?page=${pageNum}|}" th:text="${pageNum}"></a>
+                            </li>
+                            <!-- "다음" 버튼 -->
+                            <li class="page-item" th:class="${qaList.number + 1 >= qaList.totalPages} ? 'disabled' : ''">
+                                <a class="page-link" th:if="${qaList.number + 1 < qaList.totalPages}" th:href="@{|/main/qa?page=${qaList.number + 2}|}">&gt;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-4 text-end">
+                    <a th:if="${search != null}" th:href="@{|/main/qa?page=${qaList.totalPages}&search=${search}|}">마지막으로</a>
+                    <a th:unless="${search != null}" th:href="@{|/main/qa?page=${qaList.totalPages}|}">마지막으로</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
 
 </body>
+<script th:inline="javascript">
+    function formatTimeAgo() {
+        const createdTimeElements = document.querySelectorAll('.postMain[data-created-time]');
+
+        createdTimeElements.forEach(element => {
+            const createdTime = element.getAttribute('data-created-time');
+            console.log('Created Time:', createdTime); // Check if the createdTime is a valid date
+            const now = new Date();
+            const createdDate = new Date(createdTime);
+            console.log('Now:', now);
+            console.log('Created Date:', createdDate);
+            const timeDifference = now - createdDate;
+            console.log('Time Difference:', timeDifference);
+
+            if (timeDifference < 60 * 1000) {
+                console.log('Less than a minute ago');
+                element.textContent = "약 " + Math.floor(timeDifference / 1000) + "초 전";
+            } else if (timeDifference < 60 * 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / (60 * 1000)) + "분 전";
+            } else if (timeDifference < 24 * 60 * 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / (60 * 60 * 1000)) + "시간 전";
+            } else {
+                element.textContent = Math.floor(timeDifference / (24 * 60 * 60 * 1000)) + "일 전";
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        formatTimeAgo();
+    });
+</script>
 </html>

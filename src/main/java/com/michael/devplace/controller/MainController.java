@@ -35,9 +35,7 @@ public class MainController {
         if (userDTO != null) {
             model.addAttribute("userDTO", userDTO);
         }
-
         Page<Map<String, Object>> communityList;
-        System.out.println(search);
         if (search != null && !search.isEmpty()) {
             // 검색어로 필터링된 포스트 목록 가져오기
             communityList = postService.searchedCommunityList(search, pageable);
@@ -110,5 +108,41 @@ public class MainController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("communityList", communityList);
         return "shareInfo";
+    }
+
+    @GetMapping("/main/qa")
+    public String qa(@RequestParam(name = "search", required = false) String search, HttpSession session, @PageableDefault(page = 1) Pageable pageable, Model model){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null) {
+            model.addAttribute("userDTO", userDTO);
+        }
+        Page<Map<String, Object>> qaList;
+        if (search != null && !search.isEmpty()) {
+            // 검색어로 필터링된 포스트 목록 가져오기
+            qaList = postService.searchedQaList(search, pageable);
+            model.addAttribute("search", search);
+        } else {
+            // 검색어가 없는 경우 모든 포스트 가져오기
+            qaList = postService.qaList(pageable);
+        }
+        int blockLimit = 5;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = Math.min((startPage + blockLimit - 1), qaList.getTotalPages());
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("qaList", qaList);
+
+        return "qa";
+    }
+
+    @GetMapping("/main/tech")
+    public String tech(){
+        return "tech";
+    }
+
+    @GetMapping("/main/career")
+    public String career(){
+        return "career";
     }
 }

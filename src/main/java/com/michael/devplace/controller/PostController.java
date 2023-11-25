@@ -39,6 +39,6 @@ public class PostController {
         postService.addViewCount(id);// 클릭 당 조회수 1 증가
         Map<String, Object> detail = postService.findById(id);
         model.addAttribute("detail", detail);
-        return "communityDetail";
+        return "postDetail";
     }
 }

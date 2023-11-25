@@ -39,7 +39,6 @@ public class PostService {
         PostEntity postEntity = PostEntity.toSaveEntity(postDTO, userEntity);
         postRepository.save(postEntity);
     }
-
     // 커뮤니티 전체 버전
     @Transactional
     public Page<Map<String, Object>> communityList(Pageable pageable) {

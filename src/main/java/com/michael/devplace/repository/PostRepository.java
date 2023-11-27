@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
@@ -68,4 +70,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
             "WHERE p.topic = 'etc' " +
             "AND LOWER(p.title) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<PostEntity> searchEtcPosts(@Param("search")String search, Pageable pageable);
+
+    List<PostEntity> findTop4ByPostTypeOrderByIdDesc(String postType);
+
 }

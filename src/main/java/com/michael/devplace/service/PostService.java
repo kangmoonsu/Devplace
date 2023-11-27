@@ -14,11 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -96,6 +93,7 @@ public class PostService {
         return map;
     }
 
+    // 댓글 목록
     public List<Map<String, Object>> commentList(Integer id) {
         List<Map<String, Object>> list = new ArrayList<>();
         List<CommentEntity> commentEntityList = commentRepository.findByPostEntityIdOrderByIdDesc(id);
@@ -236,5 +234,28 @@ public class PostService {
         pageable = PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id"));
         Page<PostEntity> postEntities = postRepository.findByTopicOrderByIdDesc("etc", pageable);
         return getPostDTOs(postEntities);
+    }
+
+    public List<Map<String, Object>> getLatestFourQaPosts() {
+        List<PostEntity> list = postRepository.findTop4ByPostTypeOrderByIdDesc("qa");
+        return mainList(list);
+    }
+
+    public List<Map<String, Object>> getLatestFourCommunityPosts() {
+        List<PostEntity> list = postRepository.findTop4ByPostTypeOrderByIdDesc("community");
+        return mainList(list);
+    }
+
+    private List<Map<String, Object>> mainList(List<PostEntity> list) {
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (PostEntity postEntity : list) {
+            PostDTO postDTO = PostDTO.toPostDTO(postEntity);
+            UserDTO userDTO = UserDTO.toUserDTO(postEntity.getUserEntity());
+            Map<String, Object> postMap = new HashMap<>();
+            postMap.put("postDTO", postDTO);
+            postMap.put("userDTO", userDTO);
+            resultList.add(postMap);
+        }
+        return resultList;
     }
 }

@@ -1,5 +1,6 @@
 package com.michael.devplace.controller;
 
+import com.michael.devplace.dto.PostDTO;
 import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,6 +27,10 @@ public class MainController {
         if (userDTO != null) {
             model.addAttribute("userDTO", userDTO);
         }
+        List<Map<String,Object>> qaList = postService.getLatestFourQaPosts();
+        List<Map<String,Object>> communityList = postService.getLatestFourCommunityPosts();
+        model.addAttribute("qaList", qaList);
+        model.addAttribute("communityList", communityList);
         return "main";
     }
 

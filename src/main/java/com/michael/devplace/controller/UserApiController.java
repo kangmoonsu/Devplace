@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/user")
 public class UserApiController {
 
     @GetMapping("/checkSession")

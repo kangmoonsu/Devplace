@@ -48,35 +48,12 @@
             <img src="/img/q&a.jpg" alt="q&a" class="mainImg">
         </div>
         <div class="col-3 ms-2">
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+            <div class="row" th:each="qa, iter : ${qaList}">
+                <div class="col">
+                    <span class="postMain" th:text="${qa.userDTO.nickname}"></span><i class="bi bi-dot"></i><span class="postMain" th:text="${qa.postDTO.createdTime}" th:attr="data-created-time=${qa.postDTO.createdTime}"></span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
                     <br>
-                    <span class="postTitle">1번글</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle">1번글</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle">1번글</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle">1번글</span>
+                    <span class="postTitle" th:text="${qa.postDTO.title}"></span>
+                    <hr th:unless="${iter.last}">
                 </div>
             </div>
         </div>
@@ -84,35 +61,12 @@
             <img src="/img/community.jpg" alt="devplace1" class="mainImg">
         </div>
         <div class="col ms-2">
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
+            <div class="row" th:each="comm, iter : ${communityList}">
+                <div class="col">
+                    <span class="postMain" th:text="${comm.userDTO.nickname}"></span><i class="bi bi-dot"></i><span class="postMain" th:text="${comm.postDTO.createdTime}" th:attr="data-created-time=${comm.postDTO.createdTime}"></span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
                     <br>
-                    <span class="postTitle">1번글</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle">1번글</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle">1번글</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <span class="postMain">anstn1011</span><i class="bi bi-dot"></i><span class="postMain">약 2시간 전</span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle">1번글</span>
+                    <span class="postTitle" th:text="${comm.postDTO.title}"></span>
+                    <hr th:unless="${iter.last}">
                 </div>
             </div>
         </div>
@@ -127,7 +81,37 @@
 
     <div th:replace="footer :: footer"></div>
 </div>
+<script th:inline="javascript">
+    function formatTimeAgo() {
+        const createdTimeElements = document.querySelectorAll('.postMain[data-created-time]');
 
+        createdTimeElements.forEach(element => {
+            const createdTime = element.getAttribute('data-created-time');
+            console.log('Created Time:', createdTime); // Check if the createdTime is a valid date
+            const now = new Date();
+            const createdDate = new Date(createdTime);
+            console.log('Now:', now);
+            console.log('Created Date:', createdDate);
+            const timeDifference = now - createdDate;
+            console.log('Time Difference:', timeDifference);
+
+            if (timeDifference < 60 * 1000) {
+                console.log('Less than a minute ago');
+                element.textContent = "약 " + Math.floor(timeDifference / 1000) + "초 전";
+            } else if (timeDifference < 60 * 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / (60 * 1000)) + "분 전";
+            } else if (timeDifference < 24 * 60 * 60 * 1000) {
+                element.textContent = "약 " + Math.floor(timeDifference / (60 * 60 * 1000)) + "시간 전";
+            } else {
+                element.textContent = Math.floor(timeDifference / (24 * 60 * 60 * 1000)) + "일 전";
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        formatTimeAgo();
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

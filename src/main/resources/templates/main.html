@@ -27,8 +27,24 @@
     }
 
     .postTitle {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 550;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 330px;
+    }
+    .list {
+        white-space: nowrap; /* Prevent text from wrapping */
+        overflow: hidden; /* Hide overflowing content */
+        text-overflow: ellipsis;
+    }
+    hr {
+        margin: 10px;
+    }
+    .link{
+        text-decoration: none; /* 링크 텍스트에 밑줄 제거 */
+        color: inherit; /* 링크 색상을 부모 요소에서 상속받음 */
     }
 </style>
 
@@ -47,12 +63,28 @@
         <div class="col-3">
             <img src="/img/q&a.jpg" alt="q&a" class="mainImg">
         </div>
-        <div class="col-3 ms-2">
+        <div class="col-3 list">
             <div class="row" th:each="qa, iter : ${qaList}">
                 <div class="col">
-                    <span class="postMain" th:text="${qa.userDTO.nickname}"></span><i class="bi bi-dot"></i><span class="postMain" th:text="${qa.postDTO.createdTime}" th:attr="data-created-time=${qa.postDTO.createdTime}"></span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle" th:text="${qa.postDTO.title}"></span>
+                    <div class="row mb-1">
+                        <div class="col">
+                            <span class="postMain">
+                            <span class="postMain" th:text="${qa.userDTO.nickname}"></span>
+                            <i class="bi bi-dot"></i>
+                            <span class="postMain" th:text="${qa.postDTO.createdTime}" th:attr="data-created-time=${qa.postDTO.createdTime}"></span>
+                            <i class="bi bi-dot"></i>
+                            <i class="bi bi-chevron-expand me-1"></i>
+                            <span th:text="${qa.netLikes}"></span>
+                            <i class="ms-2 me-1 bi bi-chat-left-dots"></i>
+                            <span th:text="${qa.commentCnt}"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row my-0">
+                        <div class="col">
+                            <a class="link" th:href="@{|/post/${qa.postDTO.id}|}"><span class="postTitle" th:text="${qa.postDTO.title}"></span></a>
+                        </div>
+                    </div>
                     <hr th:unless="${iter.last}">
                 </div>
             </div>
@@ -60,19 +92,35 @@
         <div class="col-3">
             <img src="/img/community.jpg" alt="devplace1" class="mainImg">
         </div>
-        <div class="col ms-2">
+        <div class="col-3 list">
             <div class="row" th:each="comm, iter : ${communityList}">
                 <div class="col">
-                    <span class="postMain" th:text="${comm.userDTO.nickname}"></span><i class="bi bi-dot"></i><span class="postMain" th:text="${comm.postDTO.createdTime}" th:attr="data-created-time=${comm.postDTO.createdTime}"></span><i class="bi bi-dot"></i><span class="postMain"><i class="bi bi-chevron-expand me-1"></i>-5<i class="ms-2 me-1 bi bi-chat-left-dots"></i>17</span>
-                    <br>
-                    <span class="postTitle" th:text="${comm.postDTO.title}"></span>
+                    <div class="row mb-1">
+                        <div class="col">
+                            <span class="postMain">
+                            <span class="postMain" th:text="${comm.userDTO.nickname}"></span>
+                            <i class="bi bi-dot"></i>
+                            <span class="postMain" th:text="${comm.postDTO.createdTime}" th:attr="data-created-time=${comm.postDTO.createdTime}"></span>
+                            <i class="bi bi-dot"></i>
+                            <i class="bi bi-chevron-expand me-1"></i>
+                            <span th:text="${comm.netLikes}"></span>
+                            <i class="ms-2 me-1 bi bi-chat-left-dots"></i>
+                            <span th:text="${comm.commentCnt}"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row my-0">
+                        <div class="col">
+                            <a class="link" th:href="@{|/post/${comm.postDTO.id}|}"><span class="postTitle" th:text="${comm.postDTO.title}"></span></a>
+                        </div>
+                    </div>
                     <hr th:unless="${iter.last}">
                 </div>
             </div>
         </div>
     </div>
-    <hr>
 
+    <!--study -->
     <div class="row">
         <div class="col-3">
 <!--            <img th:src="@{|/upload/${userDTO.imagePath}|}" alt="" class="mainImg">-->

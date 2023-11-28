@@ -251,9 +251,17 @@ public class PostService {
         for (PostEntity postEntity : list) {
             PostDTO postDTO = PostDTO.toPostDTO(postEntity);
             UserDTO userDTO = UserDTO.toUserDTO(postEntity.getUserEntity());
+            int commentCnt = postEntity.getCommentCount();
+            int postId = postEntity.getId();
+            int likeCount = likeRepository.getLikeCountByPostId(postId);
+            int dislikeCount = likeRepository.getDislikeCountByPostId(postId);
+            int netLikes = likeCount - dislikeCount;
+
             Map<String, Object> postMap = new HashMap<>();
+            postMap.put("netLikes", netLikes);
             postMap.put("postDTO", postDTO);
             postMap.put("userDTO", userDTO);
+            postMap.put("commentCnt", commentCnt);
             resultList.add(postMap);
         }
         return resultList;

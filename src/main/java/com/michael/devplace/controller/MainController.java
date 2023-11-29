@@ -223,4 +223,9 @@ public class MainController {
         model.addAttribute("etcList", etcList);
         return "etc";
     }
+
+    @GetMapping("/main/study")
+    public String studyMain(){
+        return "study";
+    }
 }

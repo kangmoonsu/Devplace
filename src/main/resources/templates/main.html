@@ -29,16 +29,14 @@
     .postTitle {
         font-size: 20px;
         font-weight: 550;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 330px;
+
     }
-    .list {
-        white-space: nowrap; /* Prevent text from wrapping */
-        overflow: hidden; /* Hide overflowing content */
-        text-overflow: ellipsis;
-    }
+    /*.list {*/
+    /*    white-space: nowrap;*/
+    /*    overflow: hidden;*/
+    /*    text-overflow: ellipsis;*/
+    /*    max-width: 100%;*/
+    /*}*/
     hr {
         margin: 10px;
     }
@@ -59,11 +57,11 @@
         </div>
     </div>
 
-    <div class="row mt-5 mb-5">
+    <div class="row mt-5 mb-5 list">
         <div class="col-3">
             <img src="/img/q&a.jpg" alt="q&a" class="mainImg">
         </div>
-        <div class="col-3 list">
+        <div class="col-3">
             <div class="row" th:each="qa, iter : ${qaList}">
                 <div class="col">
                     <div class="row mb-1">
@@ -81,7 +79,7 @@
                         </div>
                     </div>
                     <div class="row my-0">
-                        <div class="col">
+                        <div class="col text-truncate">
                             <a class="link" th:href="@{|/post/${qa.postDTO.id}|}"><span class="postTitle" th:text="${qa.postDTO.title}"></span></a>
                         </div>
                     </div>
@@ -92,7 +90,7 @@
         <div class="col-3">
             <img src="/img/community.jpg" alt="devplace1" class="mainImg">
         </div>
-        <div class="col-3 list">
+        <div class="col-3">
             <div class="row" th:each="comm, iter : ${communityList}">
                 <div class="col">
                     <div class="row mb-1">
@@ -110,7 +108,7 @@
                         </div>
                     </div>
                     <div class="row my-0">
-                        <div class="col">
+                        <div class="col text-truncate">
                             <a class="link" th:href="@{|/post/${comm.postDTO.id}|}"><span class="postTitle" th:text="${comm.postDTO.title}"></span></a>
                         </div>
                     </div>

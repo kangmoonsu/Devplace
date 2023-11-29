@@ -93,9 +93,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8 mt-4">
+                    <div class="col-8 mt-4 text-truncate">
                         <a id="detail" th:href="@{|/post/${post.postDTO.id}|}">
-                            <span class="posttitle text-break" th:text="${post.postDTO.title}"></span>
+                            <span class="posttitle" th:text="${post.postDTO.title}"></span>
                         </a>
                     </div>
                     <div class="col-4 mt-auto text-end">

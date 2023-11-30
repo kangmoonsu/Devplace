@@ -16,17 +16,32 @@
         height: auto;
     }
 
-    #studyList{
-        justify-content: center;
+    .text-bg-warning{
+        color: white !important;
+    }
+    .text-bg-info{
+        color: white !important;
+    }
+    .card-bottom{
+        align-items: center;
     }
 
     .card {
         transition: transform 0.3s;
+        overflow: auto;
+    }
+
+    .card-body {
+        position: relative; /* 부모 요소에 position: relative를 추가합니다. */
     }
 
     .card:hover {
         transform: scale(1.05);
         cursor: pointer;
+    }
+    .topic {
+        font-size: 24px;
+        color: black;
     }
 </style>
 
@@ -41,170 +56,185 @@
         </div>
     </div>
 
-
-    <div class="row studyList">
+    <div class="row mt-5 mb-5">
         <div class="col">
-            <div class="card" style="width: 300px; height: 340px;">
-                <div class="card-body d-flex flex-column">
-                    <div class="row">
-                        <div class="col">
-                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <span>마감일 | 2023.12.12</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <h5 class="card-title">프론트엔드 스터디원 모집</h5>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col">
-                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
-                        </div>
-                    </div>
-                    <div class="row mt-3 card-bottom">
-                        <hr>
-                        <div class="col">
-                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bi bi-eye"></i><span class="ms-1">123</span><i class="bi bi-chat ms-1"></i><span class="ms-1">12</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 300px; height: 340px;">
-                <div class="card-body d-flex flex-column">
-                    <div class="row">
-                        <div class="col">
-                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <span>마감일 | 2023.12.12</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <h5 class="card-title">프론트엔드 스터디원 모집</h5>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col">
-                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
-                        </div>
-                    </div>
-                    <div class="row mt-3 card-bottom">
-                        <hr>
-                        <div class="col">
-                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bi bi-eye"></i><span class="ms-1">123</span><i class="bi bi-chat ms-1"></i><span class="ms-1">12</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 300px; height: 340px;">
-                <div class="card-body d-flex flex-column">
-                    <div class="row">
-                        <div class="col">
-                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <span>마감일 | 2023.12.12</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <h5 class="card-title">프론트엔드 스터디원 모집</h5>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col">
-                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
-                        </div>
-                    </div>
-                    <div class="row mt-3 card-bottom">
-                        <hr>
-                        <div class="col">
-                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bi bi-eye"></i><span class="ms-1">123</span><i class="bi bi-chat ms-1"></i><span class="ms-1">12</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 300px; height: 340px;">
-                <div class="card-body d-flex flex-column">
-                    <div class="row">
-                        <div class="col">
-                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <span>마감일 | 2023.12.12</span>
-                        </div>
-                    </div>
-                    <div class="row mt-auto">
-                        <div class="col">
-                            <h5 class="card-title">프론트엔드 스터디원 모집</h5>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col">
-                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
-                        </div>
-                    </div>
-                    <div class="row mt-3 card-bottom">
-                        <hr>
-                        <div class="col">
-                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
-                        </div>
-                        <div class="col text-end">
-                            <i class="bi bi-eye"></i><span class="ms-1">123</span><i class="bi bi-chat ms-1"></i><span class="ms-1">12</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <nav class="nav">
+                <a class="nav-link topic" href="#">전체</a>
+                <a class="nav-link topic" href="#">스터디</a>
+                <a class="nav-link topic" href="#">프로젝트</a>
+            </nav>
         </div>
     </div>
 
+    <div class="row">
+
+    </div>
+    <div class="row mt-2">
+        <div class="col col-lg-3 mb-4">
+            <div class="card" style="width: 300px; height: 340px;">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col">
+                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <span>마감일 | 2023.12.12</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <h5 class="card-title fw-bold">프론트엔드 스터디원 모집</h5>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-3 card-bottom">
+                        <hr>
+                        <div class="col">
+                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bi bi-eye"></i><span class="ms-1 me-2">123</span><i class="bi bi-chat"></i><span class="ms-1">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col col-lg-3 mb-4">
+            <div class="card" style="width: 300px; height: 340px;">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col">
+                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <span>마감일 | 2023.12.12</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <h5 class="card-title fw-bold">프론트엔드 스터디원 모집</h5>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-3 card-bottom">
+                        <hr>
+                        <div class="col">
+                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bi bi-eye"></i><span class="ms-1 me-2">123</span><i class="bi bi-chat"></i><span class="ms-1">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col col-lg-3 mb-4">
+            <div class="card" style="width: 300px; height: 340px;">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col">
+                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <span>마감일 | 2023.12.12</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <h5 class="card-title fw-bold">프론트엔드 스터디원 모집</h5>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-3 card-bottom">
+                        <hr>
+                        <div class="col">
+                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bi bi-eye"></i><span class="ms-1 me-2">123</span><i class="bi bi-chat"></i><span class="ms-1">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col col-lg-3 mb-4">
+            <div class="card" style="width: 300px; height: 340px;">
+                <div class="card-body d-flex flex-column">
+                    <div class="row">
+                        <div class="col">
+                            <span class="badge text-bg-warning"><i class="bi bi-pencil-fill"></i> 스터디</span> <span class="badge text-bg-info"><i class="bi bi-folder-fill"></i> 프로젝트</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <span>마감일 | 2023.12.12</span>
+                        </div>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col">
+                            <h5 class="card-title fw-bold">프론트엔드 스터디원 모집</h5>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p class="card-text"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"><img src="techicon/aws.png" alt="" class="techIcon me-1"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-3 card-bottom">
+                        <hr>
+                        <div class="col">
+                            <img class="userImg" src="img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
+                        </div>
+                        <div class="col text-end">
+                            <i class="bi bi-eye"></i><span class="ms-1 me-2">123</span><i class="bi bi-chat"></i><span class="ms-1">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 

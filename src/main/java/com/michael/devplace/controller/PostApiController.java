@@ -28,4 +28,11 @@ public class PostApiController {
         postService.postQa(postDTO, session);
         return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
     }
+//
+//    @PostMapping("/study")
+//    public ResponseEntity<Integer> studySave(@){
+//
+//        return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
+//    }
+
 }

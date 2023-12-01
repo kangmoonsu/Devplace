@@ -29,6 +29,11 @@ public class PostController {
         return "qaPost";
     }
 
+    @GetMapping("/study")
+    public String studyPost(){
+        return "studyPost";
+    }
+
     // 커뮤니티 글 상세
     @GetMapping("/{id}")
     public String communityDetail(@PathVariable Integer id, Model model, HttpSession session){

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://unpkg.com/@yaireo/tagify"></script>
+    <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <link th:href="@{/css/header.css}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+    <title><Dev: place/></title>
+</head>
+<style>
+    select.form-select {
+        height: 52.59px;
+    }
+    #deadline{
+        height: 52.59px;
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .step {
+        font-size: 30px;
+    }
+
+    form label.form-label {
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+
+
+<body>
+<div class="container">
+    <div th:replace="header :: header"></div>
+    <br>
+
+    <div class="row mb-4">
+        <div class="col-1"></div>
+        <div class="col">
+            <span class="step"><i class="bi bi-1-circle me-2"></i>프로젝트 기본 정보를 입력해주세요.</span>
+        </div>
+    </div>
+
+    <form action="">
+        <!-- 1번째 row 모집 구분 / 인원-->
+        <div class="row mt-3">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <label for="studyType" class="form-label">모집 구분</label>
+                <select name="studyType" id="studyType" class="form-select">
+                    <option value="" disabled selected>스터디/프로젝트</option>
+                    <option value="스터디">스터디</option>
+                    <option value="프로젝트">프로젝트</option>
+                </select>
+            </div>
+
+            <div class="col-5">
+                <label for="capacity" class="form-label">모집 인원</label>
+                <select name="capacity" id="capacity" class="form-select">
+                    <option value="" disabled selected>인원 미정~10명 이상</option>
+                    <option value="인원 미정">인원 미정</option>
+                    <option value="1">1명</option>
+                    <option value="2">2명</option>
+                    <option value="3">3명</option>
+                    <option value="4">4명</option>
+                    <option value="5">5명</option>
+                    <option value="6">6명</option>
+                    <option value="7">7명</option>
+                    <option value="8">8명</option>
+                    <option value="9">9명</option>
+                    <option value="more_than_10">10명 이상</option>
+                </select>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <!-- 2번째 row 진행 방식 / 기간-->
+        <div class="row mt-4">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <label for="eventType" class="form-label">진행 방식</label>
+                <select name="eventType" id="eventType" class="form-select">
+                    <option value="온라인">온라인</option>
+                    <option value="오프라인">오프라인</option>
+                    <option value="온/오프라인">온/오프라인</option>
+                </select>
+            </div>
+            <div class="col-5">
+                <label for="eventPeriod" class="form-label">진행 기간</label>
+                <select name="eventPeriod" id="eventPeriod" class="form-select">
+                    <option value="" disabled selected>기간 미정~6개월 이상</option>
+                    <option value="기간 미정">기간 미정</option>
+                    <option value="1개월">1개월</option>
+                    <option value="2개월">2개월</option>
+                    <option value="3개월">3개월</option>
+                    <option value="4개월">4개월</option>
+                    <option value="5개월">5개월</option>
+                    <option value="6개월">6개월</option>
+                    <option value="장기">장기</option>
+                </select>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <!-- 3번째 row 기술 스택 / 모집 마감일-->
+        <div class="row mt-4">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <label for="techStack" class="form-label">기술 스택</label>
+                <input name="techStack" id="techStack" class="form-control">
+            </div>
+            <div class="col-5">
+                <label for="deadline" class="form-label">모집 마감일</label>
+                <input type="date" class="form-control" id="deadline">
+            </div>
+            <div class="col-1"></div>
+        </div>
+
+        <!-- 4번째 row 모집 포지션 / 연락 방법-->
+        <div class="row mt-4 mb-3">
+            <div class="col-1"></div>
+            <div class="col-5">
+                <label class="form-label">모집 포지션</label><br>
+                <input class="form-check-input" type="checkbox" name="position" value="all" id="all">
+                <label class="form-check-label me-1" for="all">전체</label>
+                <input class="form-check-input" type="checkbox" name="position" value="frontend" id="frontend">
+                <label class="form-check-label me-1" for="frontend">프론트엔드</label>
+                <input class="form-check-input" type="checkbox" name="position" value="backend" id="backend">
+                <label class="form-check-label me-1" for="backend">백엔드</label>
+                <input class="form-check-input" type="checkbox" name="position" value="designer" id="designer">
+                <label class="form-check-label me-1" for="designer">디자이너</label>
+                <input class="form-check-input" type="checkbox" name="position" value="ios" id="ios">
+                <label class="form-check-label me-1" for="ios">IOS</label>
+                <br>
+                <input class="form-check-input" type="checkbox" name="position" value="android" id="android">
+                <label class="form-check-label me-1" for="android">안드로이드</label>
+                <input class="form-check-input" type="checkbox" name="position" value="devops" id="devops">
+                <label class="form-check-label me-1" for="devops">데브옵스</label>
+                <input class="form-check-input" type="checkbox" name="position" value="projectmanager" id="projectmanager">
+                <label class="form-check-label me-1" for="projectmanager">PM</label>
+                <input class="form-check-input" type="checkbox" name="position" value="productmanager" id="productmanager">
+                <label class="form-check-label me-1" for="productmanager">기획자</label>
+            </div>
+            <div class="col-5">
+                <label for="contact" class="form-label">연락 방법</label>
+                <select style="height: 38px;" name="contact" id="contact" class="form-select">
+                    <option value="오픈톡">오픈톡</option>
+                    <option value="이메일">이메일</option>
+                    <option value="구글 폼">구글 폼</option>
+                </select>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-6"></div>
+            <div class="col-5 mt-1">
+                <input type="text" class="form-control" name="contactAddress" placeholder="링크 혹은 이메일 주소를 입력해주세요.">
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-4">
+            <div class="col-1"></div>
+            <div class="col">
+                <span class="step"><i class="bi bi-2-circle me-2"></i>프로젝트에 대해 소개해주세요.</span>
+            </div>
+        </div>
+
+        <!--글 제목-->
+        <div class="row mt-3">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="글 제목을 입력해주세요!">
+            </div>
+            <div class="col-1"></div>
+        </div>
+
+        <!-- 글 본문 -->
+        <div class="row mt-3">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <label for="content" class="form-label">본문</label>
+                <textarea name="content" id="content" class="form-control" placeholder="프로젝트에 대해 소개해주세요!"></textarea>
+            </div>
+            <div class="col-1"></div>
+        </div>
+
+        <!-- 취소 / 작성 버튼-->
+        <div class="row mt-3 text-end">
+            <div class="col-7"></div>
+            <div class="col-1"></div>
+            <div class="col-3">
+                <a href="" class="btn btn-secondary btn-lg">돌아가기</a>
+                <button class="btn btn-primary btn-lg" id="btn-save">등록하기</button>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </form>
+
+    <pre>
+
+    </pre>
+
+
+
+</div>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        // Tagify 초기화
+        let input = document.getElementById('techStack');
+        let tagify = new Tagify(input, {
+            enforceWhitelist: true,
+            whitelist: ['Java', 'C', 'Kotlin', 'Go', 'Swift', 'Javascript', 'Typescript', 'Python', 'Django', 'Node.js', 'Flutter', 'Nextjs', 'Nestjs', 'Express', 'Docker', 'Oracle', 'Mysql', 'Mariadb', 'Mongodb', 'React', 'Vue', 'Spring', 'Aws', 'Git', 'Kubernetes', 'Figma'],
+            dropdown: {
+                classname: "tagify-dropdown",
+                enabled: 1
+            }
+        });
+
+        // Summernote 초기화
+        $('#content').summernote({
+            codeviewFilter: false,
+            codeviewIframeFilter: false,
+            disableXSSProtection: false,
+            height: 500,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            lang: 'ko-KR',
+            toolbar: [
+                ['style', ['style']],
+                ['fontsize', ['fontsize']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['insert', ['picture']],
+                ['view', ['codeview', 'fullscreen']],
+            ],
+        });
+
+        $('#btn-save').click(function (e) {
+            e.preventDefault(); // 기본 이벤트(페이지 새로고침 등) 방지
+
+            // 각 input과 select에서 데이터 가져오기
+            const studyType = $('#studyType').val();
+            const capacity = $('#capacity').val();
+            const eventType = $('#eventType').val();
+            const eventPeriod = $('#eventPeriod').val();
+            const techStack = $('#techStack').val().split(','); // 배열로 변환
+            const deadline = $('#deadline').val();
+            const positions = $("input[name='position']:checked").map(function () {
+                return $(this).val();
+            }).get(); // 배열로 변환
+            const contact = $('#contact').val();
+            const contactAddress = $('input[name="contactAddress"]').val();
+
+            // FormData 객체 생성
+            const formData = {
+                studyType: studyType,
+                capacity: capacity,
+                eventType: eventType,
+                eventPeriod: eventPeriod,
+                techStack: techStack,
+                deadline: deadline,
+                positions: positions,
+                contact: contact,
+                contactAddress: contactAddress
+            };
+            // AJAX POST 요청
+            $.ajax({
+                type: 'POST',
+                url: '/post/study',
+                data: JSON.stringify(formData), // 데이터를 JSON 형식으로 변환하여 전송
+                contentType: 'application/json', // 전송하는 데이터 타입 명시
+                success: function (response) {
+                    // 요청이 성공한 경우 실행되는 코드
+                    console.log('요청이 성공했습니다.');
+                    // 원하는 작업을 추가하세요 (예: 페이지 리로드, 다른 동작 수행 등)
+                },
+                error: function (error) {
+                    // 요청이 실패한 경우 실행되는 코드
+                    console.error('요청이 실패했습니다.');
+                    // 오류 처리 또는 다른 작업을 추가하세요
+                }
+            });
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>

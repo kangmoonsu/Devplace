@@ -33,10 +33,13 @@ public class UserEntity extends DateEntity{
     @Column
     private String imagePath;
 
-    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY) // PostEntity 엔티티의 user 필드와 매핑
+    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PostEntity> postEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY) // PostEntity 엔티티의 user 필드와 매핑
+    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<StudyEntity> studyEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     public static UserEntity toUserEntity(UserDTO userDTO) {

@@ -19,9 +19,16 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "articleId")
+    private Integer articleId;
+
     @ManyToOne
-    @JoinColumn(name = "postId")
+    @JoinColumn(name = "articleId", referencedColumnName = "id", insertable = false, updatable = false)
     private PostEntity postEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "articleId", referencedColumnName = "id", insertable = false, updatable = false)
+    private StudyEntity studyEntity;
 
     @ManyToOne
     @JoinColumn(name = "userId") //

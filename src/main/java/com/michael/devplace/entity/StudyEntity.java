@@ -13,9 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "study")
+@SequenceGenerator(name = "article_seq", sequenceName = "seq_name", allocationSize = 1)
 public class StudyEntity extends DateEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_seq")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,19 +39,26 @@ public class StudyEntity extends DateEntity {
     private String eventPeriod;
 
     @Column
+    private int capacity;
+
+    @Column
     private String deadline;
 
-    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY) // PostEntity 엔티티의 user 필드와 매핑
-    private List<TechEntity> postEntityList = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "positions", joinColumns = @JoinColumn(name = "post_id"))
-    @Column(name = "position")
-    private List<String> positions;
+    @Column
+    private int viewCnt;
 
     @Column
     private String contact;
 
     @Column
     private String contactAddress;
+
+    @OneToMany(mappedBy = "studyEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TechEntity> techEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "studyEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PositionEntity> positionEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "studyEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 }

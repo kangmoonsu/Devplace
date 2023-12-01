@@ -14,9 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "post")
+@SequenceGenerator(name = "article_seq", sequenceName = "seq_name", allocationSize = 1)
 public class PostEntity extends DateEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_seq")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)

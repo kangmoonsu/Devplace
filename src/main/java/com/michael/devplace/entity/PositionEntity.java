@@ -15,4 +15,10 @@ public class PositionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "studyId")
+    private StudyEntity studyEntity;
+
+    private String position;
 }

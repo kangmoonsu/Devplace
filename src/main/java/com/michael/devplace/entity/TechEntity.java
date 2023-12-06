@@ -1,5 +1,6 @@
 package com.michael.devplace.entity;
 
+import com.michael.devplace.dto.TechDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "tech")
+@Table(name = "study_tech")
 public class TechEntity {
 
     @Id
@@ -22,4 +23,12 @@ public class TechEntity {
     private StudyEntity studyEntity;
 
     private String tech;
+
+    public static TechEntity toSaveEntity(TechDTO techDTO,StudyEntity studyEntity){
+        return TechEntity.builder()
+                .id(techDTO.getId())
+                .studyEntity(studyEntity)
+                .tech(techDTO.getTech())
+                .build();
+    }
 }

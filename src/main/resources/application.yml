@@ -1,7 +1,9 @@
 server:
+  max-http-header-size: 400000
   port: 9711
   tomcat:
     max-http-form-post-size: 2MB
+
 
 spring:
   datasource:

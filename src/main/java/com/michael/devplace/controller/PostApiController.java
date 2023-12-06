@@ -1,6 +1,7 @@
 package com.michael.devplace.controller;
 
 import com.michael.devplace.dto.PostDTO;
+import com.michael.devplace.dto.StudyDTO;
 import com.michael.devplace.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,13 @@ public class PostApiController {
         postService.postQa(postDTO, session);
         return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
     }
-//
-//    @PostMapping("/study")
-//    public ResponseEntity<Integer> studySave(@){
-//
-//        return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
-//    }
+
+    @PostMapping("/recruit")
+    public ResponseEntity<Integer> recruitSave(@RequestBody StudyDTO studyDTO , HttpSession session) {
+        System.out.println(studyDTO.getTitle());
+        System.out.println(studyDTO.getContactAddress());
+        postService.postRecruit(studyDTO, session);
+        return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
+    }
 
 }

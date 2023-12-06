@@ -35,7 +35,6 @@ public class CommentService {
 
 
     }
-
     public List<CommentDTO> findAll(Integer postId) {
         PostEntity postEntity = postRepository.findById(postId).get();
         List<CommentEntity> commentEntityList = commentRepository.findAllByPostEntityOrderByIdDesc(postEntity);

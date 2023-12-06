@@ -1,10 +1,9 @@
 package com.michael.devplace.service;
 
-import com.michael.devplace.dto.CommentDTO;
-import com.michael.devplace.dto.PostDTO;
-import com.michael.devplace.dto.UserDTO;
+import com.michael.devplace.dto.*;
 import com.michael.devplace.entity.CommentEntity;
 import com.michael.devplace.entity.PostEntity;
+import com.michael.devplace.entity.StudyEntity;
 import com.michael.devplace.entity.UserEntity;
 import com.michael.devplace.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,8 @@ public class PostService {
     private PostRepository postRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private StudyRepository studyRepository;
 
     // 커뮤니티 글 작성
     public void postCommunity(PostDTO postDTO, HttpSession session) {
@@ -266,4 +267,22 @@ public class PostService {
         }
         return resultList;
     }
+
+    public void postRecruit(StudyDTO studyDTO, HttpSession session) {
+
+        UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
+        PostEntity postEntity = PostEntity.toPostEntity(studyDTO, userEntity);
+        StudyEntity studyEntity = StudyEntity.toStudyEntity(studyDTO);
+        postRepository.save(postEntity);
+        studyEntity.setPostEntity(postEntity);
+        studyRepository.save(studyEntity);
+    }
+
+//    public void postCommunity(PostDTO postDTO, HttpSession session) {
+//        postDTO.setPostType("community");
+//        UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
+//        // 왜 updateEntity로 되어 있지?
+//        PostEntity postEntity = PostEntity.toSaveEntity(postDTO, userEntity);
+//        postRepository.save(postEntity);
+//    }
 }

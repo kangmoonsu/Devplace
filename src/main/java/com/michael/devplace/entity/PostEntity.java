@@ -1,6 +1,7 @@
 package com.michael.devplace.entity;
 
 import com.michael.devplace.dto.PostDTO;
+import com.michael.devplace.dto.StudyDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,10 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "post")
-@SequenceGenerator(name = "article_seq", sequenceName = "seq_name", allocationSize = 1)
 public class PostEntity extends DateEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,6 +44,9 @@ public class PostEntity extends DateEntity {
 
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikeEntity> postUserLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudyEntity> studyEntityList = new ArrayList<>();
 
     // 메서드를 통해 동적으로 추천 수 및 비추천 수를 계산
     public int getLikeCnt() {
@@ -78,6 +81,17 @@ public class PostEntity extends DateEntity {
                 .content(postDTO.getContent())
                 .postType(postDTO.getPostType())
                 .viewCnt(postDTO.getViewCnt())
+                .build();
+    }
+
+    public static PostEntity toPostEntity(StudyDTO studyDTO, UserEntity userEntity) {
+        return PostEntity.builder()
+                .userEntity(userEntity)
+                .title(studyDTO.getTitle())
+                .content(studyDTO.getContent())
+                .postType(studyDTO.getPostType())
+                .topic(studyDTO.getTopic())
+                .viewCnt(studyDTO.getViewCnt())
                 .build();
     }
 }

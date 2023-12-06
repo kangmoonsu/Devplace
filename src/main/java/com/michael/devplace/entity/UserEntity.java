@@ -37,9 +37,6 @@ public class UserEntity extends DateEntity{
     private List<PostEntity> postEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<StudyEntity> studyEntityList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "userEntity" , cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     public static UserEntity toUserEntity(UserDTO userDTO) {

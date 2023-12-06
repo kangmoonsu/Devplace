@@ -55,8 +55,8 @@
         <div class="row mt-3">
             <div class="col-1"></div>
             <div class="col-5">
-                <label for="studyType" class="form-label">모집 구분</label>
-                <select name="studyType" id="studyType" class="form-select">
+                <label for="topic" class="form-label">모집 구분</label>
+                <select name="topic" id="topic" class="form-select">
                     <option value="" disabled selected>스터디/프로젝트</option>
                     <option value="스터디">스터디</option>
                     <option value="프로젝트">프로젝트</option>
@@ -211,9 +211,75 @@
 </div>
 <script th:inline="javascript">
 
+    let index = {
+        init: function () {
+            $("#btn-save").on("click", () => {
+                this.save();
+            })
+        },
+        save: function () {
+            // 각 input과 select에서 데이터 가져오기
+            const title = $('#title').val();
+            const content = $('#content').val();
+            const topic = $('#topic').val();
+            const capacity = $('#capacity').val();
+            const eventType = $('#eventType').val();
+            const eventPeriod = $('#eventPeriod').val();
+            const techStack = $('#techStack').val().split(','); // 배열로 변환
+            const deadline = $('#deadline').val();
+            const positions = $("input[name='position']:checked").map(function () {
+                return $(this).val();
+            }).get(); // 배열로 변환
+            const contact = $('#contact').val();
+
+            const contactAddress = $('input[name="contactAddress"]').val();
+
+            // FormData 객체 생성
+            const formData = {
+                title: title,
+                content: content,
+                topic: topic,
+                capacity: capacity,
+                eventType: eventType,
+                eventPeriod: eventPeriod,
+                techStack: techStack,
+                deadline: deadline,
+                positions: positions,
+                contact: contact,
+                contactAddress: contactAddress
+            };
+
+            // AJAX POST 요청
+            $.ajax({
+                type: 'POST',
+                url: '/post/recruit',
+                data: JSON.stringify(formData), // 데이터를 JSON 형식으로 변환하여 전송
+                contentType: 'application/json', // 전송하는 데이터 타입 명시
+                success: function (response) {
+                    // 요청이 성공한 경우 실행되는 코드
+                    console.log('요청이 성공했습니다.');
+                    alert("글 작성이 완료되었습니다.")
+                    location.href = "/main/study";
+                    // 원하는 작업을 추가하세요 (예: 페이지 리로드, 다른 동작 수행 등)
+                },
+                error: function (error) {
+                    // 요청이 실패한 경우 실행되는 코드
+                    console.error('요청이 실패했습니다.');
+                    // 오류 처리 또는 다른 작업을 추가하세요
+                }
+            }).done(function (res) {
+                alert("글 작성이 완료되었습니다.");
+                console.log(JSON.stringify(res));
+                location.href = "/main/study";
+            }).fail(function (err) {
+                alert(JSON.stringify(err));
+            });
+        }
+    };
     $(document).ready(function () {
         // Tagify 초기화
         let input = document.getElementById('techStack');
+
         let tagify = new Tagify(input, {
             enforceWhitelist: true,
             whitelist: ['Java', 'C', 'Kotlin', 'Go', 'Swift', 'Javascript', 'Typescript', 'Python', 'Django', 'Node.js', 'Flutter', 'Nextjs', 'Nestjs', 'Express', 'Docker', 'Oracle', 'Mysql', 'Mariadb', 'Mongodb', 'React', 'Vue', 'Spring', 'Aws', 'Git', 'Kubernetes', 'Figma'],
@@ -222,8 +288,9 @@
                 enabled: 1
             }
         });
-
         // Summernote 초기화
+
+
         $('#content').summernote({
             codeviewFilter: false,
             codeviewIframeFilter: false,
@@ -245,53 +312,10 @@
                 ['view', ['codeview', 'fullscreen']],
             ],
         });
+    })
 
-        $('#btn-save').click(function (e) {
-            e.preventDefault(); // 기본 이벤트(페이지 새로고침 등) 방지
-
-            // 각 input과 select에서 데이터 가져오기
-            const studyType = $('#studyType').val();
-            const capacity = $('#capacity').val();
-            const eventType = $('#eventType').val();
-            const eventPeriod = $('#eventPeriod').val();
-            const techStack = $('#techStack').val().split(','); // 배열로 변환
-            const deadline = $('#deadline').val();
-            const positions = $("input[name='position']:checked").map(function () {
-                return $(this).val();
-            }).get(); // 배열로 변환
-            const contact = $('#contact').val();
-            const contactAddress = $('input[name="contactAddress"]').val();
-
-            // FormData 객체 생성
-            const formData = {
-                studyType: studyType,
-                capacity: capacity,
-                eventType: eventType,
-                eventPeriod: eventPeriod,
-                techStack: techStack,
-                deadline: deadline,
-                positions: positions,
-                contact: contact,
-                contactAddress: contactAddress
-            };
-            // AJAX POST 요청
-            $.ajax({
-                type: 'POST',
-                url: '/post/study',
-                data: JSON.stringify(formData), // 데이터를 JSON 형식으로 변환하여 전송
-                contentType: 'application/json', // 전송하는 데이터 타입 명시
-                success: function (response) {
-                    // 요청이 성공한 경우 실행되는 코드
-                    console.log('요청이 성공했습니다.');
-                    // 원하는 작업을 추가하세요 (예: 페이지 리로드, 다른 동작 수행 등)
-                },
-                error: function (error) {
-                    // 요청이 실패한 경우 실행되는 코드
-                    console.error('요청이 실패했습니다.');
-                    // 오류 처리 또는 다른 작업을 추가하세요
-                }
-            });
-        });
+    $(document).ready(function () {
+        index.init(); // Initialize form submission handling
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

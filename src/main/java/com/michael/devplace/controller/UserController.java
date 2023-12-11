@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/user/login") // 로그인 페이지
     public String login() {
-        return "login";
+        return "auth/login";
     }
 
     @PostMapping("/user/login") // 로그인 실행
@@ -30,13 +30,13 @@ public class UserController {
             session.setAttribute("user", user);
             return "redirect:/main";
         } else {
-            return "login";
+            return "auth/login";
         }
     }
 
     @GetMapping("/user/join") // 회원가입 페이지
     public String join() {
-        return "join";
+        return "auth/join";
     }
 
     @PostMapping("/user/join") // 회원가입 실행

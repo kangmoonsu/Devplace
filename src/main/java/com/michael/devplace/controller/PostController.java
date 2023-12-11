@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Map;
 
 
@@ -21,17 +20,17 @@ public class PostController {
 
     @GetMapping("/community")
     public String communityPost(){
-        return "communityPost";
+        return "post/communityPost";
     }
 
     @GetMapping("/qa")
     public String qaPost(){
-        return "qaPost";
+        return "post/qaPost";
     }
 
     @GetMapping("/study")
     public String studyPost(){
-        return "studyPost";
+        return "post/studyPost";
     }
 
     // 커뮤니티 글 상세

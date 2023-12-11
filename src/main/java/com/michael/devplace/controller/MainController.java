@@ -1,6 +1,5 @@
 package com.michael.devplace.controller;
 
-import com.michael.devplace.dto.PostDTO;
 import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class MainController {
         List<Map<String,Object>> communityList = postService.getLatestFourCommunityPosts();
         model.addAttribute("qaList", qaList);
         model.addAttribute("communityList", communityList);
-        return "main";
+        return "list/main";
     }
 
     // 커뮤니티 전체 리스트
@@ -57,7 +56,7 @@ public class MainController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("communityList", communityList);
-        return "community";
+        return "list/community";
     }
 
 
@@ -86,7 +85,7 @@ public class MainController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("communityList", communityList);
-        return "life";
+        return "list/life";
     }
     // 공유
     @GetMapping("/main/community/shareInfo")
@@ -113,7 +112,7 @@ public class MainController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("communityList", communityList);
-        return "shareInfo";
+        return "list/shareInfo";
     }
 
     @GetMapping("/main/qa")
@@ -139,7 +138,7 @@ public class MainController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("qaList", qaList);
 
-        return "qa";
+        return "list/qa";
     }
 
     @GetMapping("/main/qa/tech")
@@ -167,7 +166,7 @@ public class MainController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("techList", techList);
 
-        return "tech";
+        return "list/tech";
     }
 
     @GetMapping("/main/qa/career")
@@ -194,7 +193,7 @@ public class MainController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("careerList", careerList);
-        return "career";
+        return "list/career";
     }
 
     @GetMapping("/main/qa/etc")
@@ -221,11 +220,11 @@ public class MainController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("etcList", etcList);
-        return "etc";
+        return "list/etc";
     }
 
     @GetMapping("/main/study")
     public String studyMain(){
-        return "study";
+        return "list/study";
     }
 }

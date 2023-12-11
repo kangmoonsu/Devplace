@@ -1,10 +1,7 @@
 package com.michael.devplace.service;
 
 import com.michael.devplace.dto.*;
-import com.michael.devplace.entity.CommentEntity;
-import com.michael.devplace.entity.PostEntity;
-import com.michael.devplace.entity.StudyEntity;
-import com.michael.devplace.entity.UserEntity;
+import com.michael.devplace.entity.*;
 import com.michael.devplace.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -28,6 +26,10 @@ public class PostService {
     private CommentRepository commentRepository;
     @Autowired
     private StudyRepository studyRepository;
+    @Autowired
+    private TechRepository techRepository;
+    @Autowired
+    private PositionRepository positionRepository;
 
     // 커뮤니티 글 작성
     public void postCommunity(PostDTO postDTO, HttpSession session) {
@@ -269,13 +271,42 @@ public class PostService {
     }
 
     public void postRecruit(StudyDTO studyDTO, HttpSession session) {
-
+        studyDTO.setPostType("recruit");
         UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
         PostEntity postEntity = PostEntity.toPostEntity(studyDTO, userEntity);
-        StudyEntity studyEntity = StudyEntity.toStudyEntity(studyDTO);
+
+        // PostEntity 저장
         postRepository.save(postEntity);
-        studyEntity.setPostEntity(postEntity);
+
+        // StudyEntity 생성 및 저장
+        StudyEntity studyEntity = StudyEntity.toStudyEntity(studyDTO);
         studyRepository.save(studyEntity);
+
+        // TechEntity 리스트 생성 및 저장
+        List<TechEntity> techEntityList = studyDTO.getTechStack().stream()
+                .map(tech -> {
+                    TechEntity techEntity = TechEntity.builder()
+                            .tech(tech)
+                            .studyEntity(studyEntity)
+                            .build();
+                    techEntity.setStudyEntity(studyEntity);
+                    return techEntity;
+                })
+                .collect(Collectors.toList());
+        techRepository.saveAll(techEntityList);
+
+        // PositionEntity 리스트 생성 및 저장
+        List<PositionEntity> positionEntityList = studyDTO.getPositions().stream()
+                .map(position -> {
+                    PositionEntity positionEntity = PositionEntity.builder()
+                            .position(position)
+                            .studyEntity(studyEntity)
+                            .build();
+                    positionEntity.setStudyEntity(studyEntity);
+                    return positionEntity;
+                })
+                .collect(Collectors.toList());
+        positionRepository.saveAll(positionEntityList);
     }
 
 //    public void postCommunity(PostDTO postDTO, HttpSession session) {

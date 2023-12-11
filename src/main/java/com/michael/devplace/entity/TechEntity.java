@@ -24,11 +24,4 @@ public class TechEntity {
 
     private String tech;
 
-    public static TechEntity toSaveEntity(TechDTO techDTO,StudyEntity studyEntity){
-        return TechEntity.builder()
-                .id(techDTO.getId())
-                .studyEntity(studyEntity)
-                .tech(techDTO.getTech())
-                .build();
-    }
 }

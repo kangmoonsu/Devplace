@@ -58,15 +58,15 @@ public class StudyEntity {
                 .contact(studyDTO.getContact())
                 .contactAddress(studyDTO.getContactAddress());
 
-        // TechEntity 리스트로 변환
+        // TechEntity 리스트로 변환 및 저장
         List<TechEntity> techEntityList = studyDTO.getTechStack().stream()
-                .map(tech -> TechEntity.builder().tech(tech).build())
+                .map(tech -> TechEntity.builder().tech(tech).studyEntity(studyEntityBuilder.build()).build())
                 .collect(Collectors.toList());
         studyEntityBuilder.techEntityList(techEntityList);
 
-        // PositionEntity 리스트로 변환
+        // PositionEntity 리스트로 변환 및 저장
         List<PositionEntity> positionEntityList = studyDTO.getPositions().stream()
-                .map(position -> PositionEntity.builder().position(position).build())
+                .map(position -> PositionEntity.builder().position(position).studyEntity(studyEntityBuilder.build()).build())
                 .collect(Collectors.toList());
         studyEntityBuilder.positionEntityList(positionEntityList);
 

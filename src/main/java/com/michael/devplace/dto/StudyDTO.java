@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.Lob;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,19 +67,6 @@ public class StudyDTO {
                 .deadline(studyEntity.getDeadline())
                 .contact(studyEntity.getContact())
                 .contactAddress(studyEntity.getContactAddress());
-
-        // TechEntity 리스트를 String 리스트로 변환
-        List<String> techStack = studyEntity.getTechEntityList().stream()
-                .map(TechEntity::getTech)
-                .collect(Collectors.toList());
-        studyDTOBuilder.techStack(techStack);
-
-        // PositionEntity 리스트를 String 리스트로 변환
-        List<String> positions = studyEntity.getPositionEntityList().stream()
-                .map(PositionEntity::getPosition)
-                .collect(Collectors.toList());
-        studyDTOBuilder.positions(positions);
-
         return studyDTOBuilder.build();
     }
 }

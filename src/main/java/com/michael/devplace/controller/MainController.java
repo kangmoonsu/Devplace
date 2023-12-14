@@ -42,11 +42,9 @@ public class MainController {
         }
         Page<Map<String, Object>> communityList;
         if (search != null && !search.isEmpty()) {
-            // 검색어로 필터링된 포스트 목록 가져오기
             communityList = postService.searchedCommunityList(search, pageable);
             model.addAttribute("search", search);
         } else {
-            // 검색어가 없는 경우 모든 포스트 가져오기
             communityList = postService.communityList(pageable);
         }
         int blockLimit = 5;
@@ -67,15 +65,12 @@ public class MainController {
         if (userDTO != null) {
             model.addAttribute("userDTO", userDTO);
         }
-
         Page<Map<String, Object>> communityList;
         System.out.println(search);
         if (search != null && !search.isEmpty()) {
-            // 검색어로 필터링된 포스트 목록 가져오기
             communityList = postService.searchedLifeList(search, pageable);
             model.addAttribute("search", search);
         } else {
-            // 검색어가 없는 경우 모든 포스트 가져오기
             communityList = postService.lifeList(pageable);
         }
         int blockLimit = 5;
@@ -98,11 +93,9 @@ public class MainController {
         Page<Map<String, Object>> communityList;
         System.out.println(search);
         if (search != null && !search.isEmpty()) {
-            // 검색어로 필터링된 포스트 목록 가져오기
             communityList = postService.searchedShareInfoList(search, pageable);
             model.addAttribute("search", search);
         } else {
-            // 검색어가 없는 경우 모든 포스트 가져오기
             communityList = postService.shareInfoList(pageable);
         }
         int blockLimit = 5;
@@ -123,11 +116,9 @@ public class MainController {
         }
         Page<Map<String, Object>> qaList;
         if (search != null && !search.isEmpty()) {
-            // 검색어로 필터링된 포스트 목록 가져오기
             qaList = postService.searchedQaList(search, pageable);
             model.addAttribute("search", search);
         } else {
-            // 검색어가 없는 경우 모든 포스트 가져오기
             qaList = postService.qaList(pageable);
         }
         int blockLimit = 5;
@@ -147,15 +138,11 @@ public class MainController {
         if (userDTO != null) {
             model.addAttribute("userDTO", userDTO);
         }
-
         Page<Map<String, Object>> techList;
-
         if (search != null && !search.isEmpty()) {
-            // 검색어로 필터링된 포스트 목록 가져오기
             techList = postService.searchedTechList(search, pageable);
             model.addAttribute("search", search);
         } else {
-            // 검색어가 없는 경우 모든 포스트 가져오기
             techList = postService.techList(pageable);
         }
         int blockLimit = 5;
@@ -175,15 +162,11 @@ public class MainController {
         if (userDTO != null) {
             model.addAttribute("userDTO", userDTO);
         }
-
         Page<Map<String, Object>> careerList;
-
         if (search != null && !search.isEmpty()) {
-            // 검색어로 필터링된 포스트 목록 가져오기
             careerList = postService.searchedCareerList(search, pageable);
             model.addAttribute("search", search);
         } else {
-            // 검색어가 없는 경우 모든 포스트 가져오기
             careerList = postService.careerList(pageable);
         }
         int blockLimit = 5;
@@ -223,8 +206,18 @@ public class MainController {
         return "list/etc";
     }
 
-    @GetMapping("/main/study")
-    public String studyMain(){
+    @GetMapping("/main/recruit")
+    public String recruitMain(Model model){
+        return "list/recruit";
+    }
+
+    @GetMapping("/main/recruit/study")
+    public String studyMain(Model model){
         return "list/study";
+    }
+
+    @GetMapping("/main/recruit/project")
+    public String studyProject(Model model){
+        return "list/project";
     }
 }

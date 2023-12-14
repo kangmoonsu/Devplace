@@ -280,6 +280,7 @@ public class PostService {
 
         // StudyEntity 생성 및 저장
         StudyEntity studyEntity = StudyEntity.toStudyEntity(studyDTO);
+        studyEntity.setPostEntity(postEntity);
         studyRepository.save(studyEntity);
 
         // TechEntity 리스트 생성 및 저장
@@ -308,12 +309,4 @@ public class PostService {
                 .collect(Collectors.toList());
         positionRepository.saveAll(positionEntityList);
     }
-
-//    public void postCommunity(PostDTO postDTO, HttpSession session) {
-//        postDTO.setPostType("community");
-//        UserEntity userEntity = UserEntity.toUpdateUserEntity((UserDTO) session.getAttribute("user"));
-//        // 왜 updateEntity로 되어 있지?
-//        PostEntity postEntity = PostEntity.toSaveEntity(postDTO, userEntity);
-//        postRepository.save(postEntity);
-//    }
 }

@@ -32,10 +32,7 @@ public class PostApiController {
 
     @PostMapping("/recruit")
     public ResponseEntity<Integer> recruitSave(@RequestBody StudyDTO studyDTO , HttpSession session) {
-        System.out.println(studyDTO.getTitle());
-        System.out.println(studyDTO.getContactAddress());
         postService.postRecruit(studyDTO, session);
         return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
     }
-
 }

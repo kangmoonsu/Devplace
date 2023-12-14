@@ -40,7 +40,7 @@
 
 <body>
 <div class="container">
-    <div th:replace="header :: header"></div>
+    <div th:replace="comm/header :: header"></div>
     <br>
 
     <div class="row mb-4">
@@ -260,7 +260,7 @@
                 success: function (response) {
                     // 요청이 성공한 경우 실행되는 코드
                     console.log('요청이 성공했습니다.');
-                    location.href = "/main/study";
+                    location.href = "/main/recruit";
                     // 원하는 작업을 추가하세요 (예: 페이지 리로드, 다른 동작 수행 등)
                 },
                 error: function (error) {
@@ -271,7 +271,7 @@
             }).done(function (res) {
                 alert("글 작성이 완료되었습니다.");
                 console.log(JSON.stringify(res));
-                location.href = "/main/study";
+                location.href = "/main/recruit";
             }).fail(function (err) {
                 alert(JSON.stringify(err));
             });
@@ -283,14 +283,12 @@
 
         let tagify = new Tagify(input, {
             enforceWhitelist: true,
-            whitelist: ['Java', 'C', 'Kotlin', 'Go', 'Swift', 'Javascript', 'Typescript', 'Python', 'Django', 'Node.js', 'Flutter', 'Nextjs', 'Nestjs', 'Express', 'Docker', 'Oracle', 'Mysql', 'Mariadb', 'Mongodb', 'React', 'Vue', 'Spring', 'Aws', 'Git', 'Kubernetes', 'Figma'],
+            whitelist: ['Java', 'C', 'Kotlin', 'Go', 'Swift', 'Javascript', 'Typescript', 'Python', 'Django', 'Nodejs', 'Flutter', 'Nextjs', 'Nestjs', 'Expressjs', 'Docker', 'Oracle', 'Mysql', 'Mariadb', 'Mongodb', 'React', 'Vue', 'Spring', 'AWS', 'Git', 'Kubernetes', 'Figma'],
             dropdown: {
                 classname: "tagify-dropdown",
                 enabled: 1
             }
         });
-        // Summernote 초기화
-
 
         $('#content').summernote({
             codeviewFilter: false,
@@ -299,7 +297,7 @@
             height: 500,
             minHeight: null,
             maxHeight: null,
-            focus: true,
+            focus: false,
             lang: 'ko-KR',
             toolbar: [
                 ['style', ['style']],
@@ -316,7 +314,7 @@
     })
 
     $(document).ready(function () {
-        index.init(); // Initialize form submission handling
+        index.init();
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

@@ -32,9 +32,9 @@ public class UserService {
             file.transferTo(new File(savePath));
             userDTO.setImagePath(saveFileName);
         } else {
-            userDTO.setImagePath(null); // 이미지를 선택하지 않았을 때, 이미지 경로를 null로 설정
+            String savePath = "defaultImg.png";
+            userDTO.setImagePath(savePath);
         }
-
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);
         userRepository.save(userEntity);
     }

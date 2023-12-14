@@ -41,7 +41,6 @@ public class UserController {
 
     @PostMapping("/user/join") // 회원가입 실행
     public String doJoin(UserDTO userDTO) throws IOException {
-        System.out.println(userDTO);
         userService.join(userDTO);
         return "redirect:/user/login";
     }
@@ -71,4 +70,20 @@ public class UserController {
             return "no";
         }
     }
+
+    @GetMapping("/user/modify")
+    public String modifyUserPage(){
+        return "user/modify";
+    }
+
+    @GetMapping("/user/bookmark")
+    public String bookmark(){
+        return "user/bookmark";
+    }
+
+    @GetMapping("/user/activityHistory")
+    public String activityHistory(){
+        return "user/activityHistory";
+    }
+
 }

@@ -23,7 +23,7 @@
                 <nav class="nav">
                     <a th:href="@{/main/qa}" class="nav-link">Q&A</a>
                     <a th:href="@{/main/community}" class="nav-link">커뮤니티</a>
-                    <a th:href="@{/main/study}" class="nav-link">Study</a>
+                    <a th:href="@{/main/recruit}" class="nav-link">Study</a>
                 </nav>
             </div>
             <div class="col navi">
@@ -41,15 +41,16 @@
                 <div class="dropdown">
                     <button class="bi bi-person-circle btn dropdown" type="button" data-bs-toggle="dropdown"></button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">마이페이지</a></li>
-                        <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
-                        <li><a class="dropdown-item" href="/user/logout">로그아웃</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/modify}">내 정보 수정</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/bookmark}">북마크</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/activityHistory}">활동 내역</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/logout}">로그아웃</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col jnavi" th:unless="${session.user != null}">
-                <a class="btn btn-outline-primary" href="/user/login">로그인</a>
-                <a class="ms-2 btn btn-primary" style="color: white;" href="/user/join">회원가입</a>
+                <a class="btn btn-outline-primary" th:href="@{/user/login}">로그인</a>
+                <a class="ms-2 btn btn-primary" style="color: white;" th:href="@{/user/join}">회원가입</a>
             </div>
         </div>
         <br>

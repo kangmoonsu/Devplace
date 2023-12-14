@@ -2,6 +2,7 @@ package com.michael.devplace.controller;
 
 import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.service.PostService;
+import com.michael.devplace.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class MainController {
     @Autowired
     private PostService postService;
+    @Autowired
+    private StudyService studyService;
 
     @GetMapping("/main")
     public String mainPage(HttpSession session, Model model) {
@@ -208,6 +211,8 @@ public class MainController {
 
     @GetMapping("/main/recruit")
     public String recruitMain(Model model){
+        List<Map<String,Object>> recruitList = studyService.recruitList();
+        model.addAttribute("recruitList",recruitList);
         return "list/recruit";
     }
 

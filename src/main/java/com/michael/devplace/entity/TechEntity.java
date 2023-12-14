@@ -1,6 +1,5 @@
 package com.michael.devplace.entity;
 
-import com.michael.devplace.dto.TechDTO;
 import lombok.*;
 
 import javax.persistence.*;

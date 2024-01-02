@@ -32,7 +32,7 @@ public class UserService {
             file.transferTo(new File(savePath));
             userDTO.setImagePath(saveFileName);
         } else {
-            String savePath = "defaultImg.png";
+            String savePath = "C:/springboot_img/defaultImg.png";
             userDTO.setImagePath(savePath);
         }
         UserEntity userEntity = UserEntity.toUserEntity(userDTO);

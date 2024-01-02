@@ -2,12 +2,11 @@ package com.michael.devplace.service;
 
 import com.michael.devplace.dto.PostDTO;
 import com.michael.devplace.dto.StudyDTO;
+import com.michael.devplace.dto.UserDTO;
 import com.michael.devplace.entity.PositionEntity;
-import com.michael.devplace.entity.PostEntity;
 import com.michael.devplace.entity.StudyEntity;
 import com.michael.devplace.entity.TechEntity;
 import com.michael.devplace.repository.StudyRepository;
-import com.michael.devplace.repository.TechRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,7 @@ import java.util.stream.Collectors;
 public class StudyService {
     @Autowired
     private StudyRepository studyRepository;
-    @Autowired
-    private TechRepository techRepository;
+
     public List<Map<String, Object>> recruitList() {
         List<Map<String,Object>> list = new ArrayList<>();
         List<StudyEntity> studyList = studyRepository.findAll();
@@ -30,6 +28,7 @@ public class StudyService {
             Map<String, Object> map = new HashMap<>();
             StudyDTO studyDTO = StudyDTO.toStudyDTO(s);
             PostDTO postDTO = PostDTO.toPostDTO(s.getPostEntity());
+            UserDTO userDTO = UserDTO.toUserDTO(s.getPostEntity().getUserEntity());
 
             List<TechEntity> techList = s.getTechEntityList();
             List<String> techStackList = techList.stream()
@@ -42,11 +41,17 @@ public class StudyService {
                     .collect(Collectors.toList());
             studyDTO.setPositions(positionNames);
 
+            map.put("userDTO", userDTO);
             map.put("studyDTO",studyDTO);
             map.put("postDTO", postDTO);
 
             list.add(map);
         }
         return list;
+    }
+
+    public Map<String, Object> findById(Integer id) {
+        Map<String, Object> map = new HashMap<>();
+        return map;
     }
 }

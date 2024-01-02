@@ -11,24 +11,27 @@
     <title><Dev: place/></title>
 </head>
 <style>
-    #community{
+    #community {
         width: 1296px;
         height: auto;
     }
 
-    .text-bg-warning{
+    .text-bg-warning {
         color: white !important;
     }
-    .text-bg-info{
+
+    .text-bg-info {
         color: white !important;
     }
-    .card-bottom{
+
+    .card-bottom {
         align-items: center;
     }
 
     .card {
         transition: transform 0.3s;
         overflow: auto;
+        overflow-y: hidden;
     }
 
     .card-body {
@@ -39,13 +42,29 @@
         transform: scale(1.05);
         cursor: pointer;
     }
+
     .topic {
         font-size: 24px;
         color: black;
     }
+
     .techIcon {
         width: 33px;
         height: 33px;
+    }
+
+    .userImg {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .deadline{
+        color: gray;
+    }
+    a {
+        color: inherit;
+        text-decoration: none;
     }
 </style>
 
@@ -82,7 +101,8 @@
         <!-- Thymeleaf를 사용하여 recruitList 데이터를 가져온다고 가정 -->
         <!-- Thymeleaf의 th:each로 리스트를 반복 -->
         <div th:each="item : ${recruitList}" class="col col-lg-3 mb-4">
-            <div class="card" style="width: 300px; height: 340px;">
+            <a th:href="@{/post/recruit/{id}(id=${item.postDTO.id})}">
+            <div class="card d-flex flex-column" style="width: 300px; height: 340px;">
                 <!-- 카드 내용 -->
                 <!-- 내용은 여기에 뿌려줄 것 -->
                 <div class="card-body d-flex flex-column">
@@ -96,7 +116,7 @@
                     </div>
                     <div class="row mt-auto">
                         <div class="col">
-                            <span>마감일 | 2023.12.12</span>
+                            <span class="deadline" th:text="'마감일 | ' + ${#temporals.format(item.postDTO.createdTime, 'yyyy.MM.dd')}"></span>
                         </div>
                     </div>
                     <div class="row mt-auto">
@@ -106,25 +126,30 @@
                     </div>
                     <div class="row mt-5">
                         <div class="col">
-                            <span class="badge text-bg-secondary me-1">백앤드</span><span class="badge text-bg-secondary me-1">백앤드</span>
+                            <span th:each="position : ${item.studyDTO.positions}" th:text="${position}" class="badge text-bg-secondary mx-1"></span>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <p class="card-text"><img src="/techIcon/AWS.png" alt="" class="techIcon me-1"><img src="/techIcon/AWS.png" alt="" class="techIcon me-1"><img src="/techIcon/AWS.png" alt="" class="techIcon me-1"><img src="/techIcon/AWS.png" alt="" class="techIcon me-1"><img src="/techIcon/AWS.png" alt="" class="techIcon me-1"><img src="/techIcon/AWS.png" alt="" class="techIcon me-1"></p>
+                            <p class="card-text">
+                                <span th:each="tech : ${item.studyDTO.techStack}">
+                                    <img th:src="@{/techIcon/{tech}.png(tech=${tech})}" alt="" class="techIcon me-1">
+                                </span>
+                            </p>
                         </div>
                     </div>
                     <div class="row mt-3 card-bottom">
                         <hr>
                         <div class="col">
-                            <img class="userImg" src="/img/defaultImg.png" alt=""><span class="ms-2">강문수</span>
+                            <img class="userImg" th:src="@{|/upload/${item.userDTO.imagePath}|}" alt=""><span class="ms-2" th:text="${item.userDTO.nickname}"></span>
                         </div>
                         <div class="col text-end">
-                            <i class="bi bi-eye"></i><span class="ms-1 me-2">123</span><i class="bi bi-chat"></i><span class="ms-1">12</span>
+                            <i class="bi bi-eye"></i><span th:text="${item.postDTO.viewCnt}" class="ms-1 me-2"></span><i class="bi bi-chat"></i><span class="ms-1">12</span>
                         </div>
                     </div>
                 </div>
             </div>
+            </a>
         </div>
     </div>
     <div class="row mt-2">

@@ -2,6 +2,7 @@ package com.michael.devplace.controller;
 
 import com.michael.devplace.dto.*;
 import com.michael.devplace.service.PostService;
+import com.michael.devplace.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,8 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private StudyService studyService;
 
     @GetMapping("/community")
     public String communityPost(){
@@ -44,5 +47,16 @@ public class PostController {
         Map<String, Object> detail = postService.findById(id);
         model.addAttribute("detail", detail);
         return "detail/postDetail";
+    }
+
+    @GetMapping("/recruit/{id}")
+    public String recruitDetail(@PathVariable Integer id, Model model, HttpSession session){
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        if (userDTO != null){
+            model.addAttribute("userDTO", userDTO);
+        }
+        postService.addViewCount(id);
+        Map<String, Object> map = studyService.findById(id);
+        return "detail/recruitDetail";
     }
 }

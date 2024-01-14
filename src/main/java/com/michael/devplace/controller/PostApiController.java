@@ -35,4 +35,5 @@ public class PostApiController {
         postService.postRecruit(studyDTO, session);
         return new ResponseEntity<>(HttpStatus.OK.value(), HttpStatus.OK);
     }
+
 }
